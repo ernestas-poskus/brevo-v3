@@ -21,7 +21,7 @@ exclude = [
 ]
 
 [dependencies]
-reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "stream"] }
+reqwest = { version = "0.13", default-features = false, features = ["json", "rustls", "stream"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "2.0"
@@ -37,6 +37,7 @@ tokio = { version = "1.40", features = ["full", "macros", "rt-multi-thread"] }
 wiremock = "0.6"
 serde_json = "1.0"
 time = { version = "0.3", features = ["macros"] }
+husky-rs = "0.4"
 
 [lints.rust]
 bad_style = "deny"
@@ -47,8 +48,13 @@ non_camel_case_types = "deny"
 all = { level = "warn", priority = 1 }
 pedantic = { level = "warn", priority = 1 }
 
-# Curated overrides for generated SDKs
+# Curated overrides for generated SDKs and tests
 derive_partial_eq_without_eq = { level = "allow", priority = 2 }
+similar_names = { level = "allow", priority = 2 }
+implicit_clone = { level = "allow", priority = 2 }
+redundant_closure_for_method_calls = { level = "allow", priority = 2 }
+uninlined_format_args = { level = "allow", priority = 2 }
+unreadable_literal = { level = "allow", priority = 2 }
 missing_errors_doc = { level = "allow", priority = 2 }
 missing_panics_doc = { level = "allow", priority = 2 }
 doc_link_with_quotes = { level = "allow", priority = 2 }
