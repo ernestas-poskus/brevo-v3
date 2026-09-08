@@ -3,9 +3,22 @@ name = "brevo-v3"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.85"
-description = "Async, type-safe Rust client for Brevo (Sendinblue) v3 REST API"
+description = "Async, strongly-typed Rust client for the Brevo (Sendinblue) v3 REST API"
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/ernestas-poskus/brevo-v3"
+homepage = "https://github.com/ernestas-poskus/brevo-v3"
+documentation = "https://docs.rs/brevo-v3"
+readme = "README.md"
+authors = ["Ernestas Poskus <ernestas.poskus@gmail.com>"]
 keywords = ["brevo", "sendinblue", "email", "sms", "api"]
+categories = ["api-bindings", "web-programming::http-client", "asynchronous"]
+exclude = [
+    "/swagger_definition_v3.json",
+    "/generate.py",
+    "/.cargo",
+    "/.github",
+    "/target",
+]
 
 [dependencies]
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "stream"] }
@@ -33,8 +46,17 @@ non_camel_case_types = "deny"
 [lints.clippy]
 all = { level = "warn", priority = 1 }
 pedantic = { level = "warn", priority = 1 }
+
+# Curated overrides for generated SDKs
+derive_partial_eq_without_eq = { level = "allow", priority = 2 }
+missing_errors_doc = { level = "allow", priority = 2 }
+missing_panics_doc = { level = "allow", priority = 2 }
+doc_link_with_quotes = { level = "allow", priority = 2 }
 module_name_repetitions = { level = "allow", priority = 2 }
 must_use_candidate = { level = "allow", priority = 2 }
 struct_excessive_bools = { level = "allow", priority = 2 }
 too_many_lines = { level = "allow", priority = 2 }
 doc_markdown = { level = "allow", priority = 2 }
+future_not_send = { level = "allow", priority = 2 }
+wildcard_imports = { level = "allow", priority = 2 }
+redundant_pub_crate = { level = "allow", priority = 2 }
