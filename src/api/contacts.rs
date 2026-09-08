@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Contacts endpoints.
@@ -27,7 +28,7 @@ impl ContactsApi {
         created_since: Option<&str>,
         sort: Option<GetContactsSort>,
         ids: Option<&[i64]>,
-        segment_id: Option<i64>,
+        segment_id: Option<SegmentId>,
         list_ids: Option<&[i64]>,
         filter: Option<&str>,
     ) -> Result<serde_json::Value> {
@@ -229,7 +230,7 @@ impl ContactsApi {
     }
 
     /// Delete a folder (and all its lists)
-    pub async fn delete_folder(&self, folder_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_folder(&self, folder_id: FolderId) -> Result<serde_json::Value> {
         let path = format!("/contacts/folders/{folder_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -238,7 +239,7 @@ impl ContactsApi {
     }
 
     /// Returns a folder's details
-    pub async fn get_folder(&self, folder_id: i64) -> Result<serde_json::Value> {
+    pub async fn get_folder(&self, folder_id: FolderId) -> Result<serde_json::Value> {
         let path = format!("/contacts/folders/{folder_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);
@@ -249,7 +250,7 @@ impl ContactsApi {
     /// Update a folder
     pub async fn update_folder(
         &self,
-        folder_id: i64,
+        folder_id: FolderId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/contacts/folders/{folder_id}");
@@ -263,7 +264,7 @@ impl ContactsApi {
     /// Get lists in a folder
     pub async fn get_folder_lists(
         &self,
-        folder_id: i64,
+        folder_id: FolderId,
         limit: Option<i64>,
         offset: Option<i64>,
         sort: Option<GetFolderListsSort>,
@@ -334,7 +335,7 @@ impl ContactsApi {
     }
 
     /// Delete a list
-    pub async fn delete_list(&self, list_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_list(&self, list_id: ListId) -> Result<serde_json::Value> {
         let path = format!("/contacts/lists/{list_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -345,7 +346,7 @@ impl ContactsApi {
     /// Get a list's details
     pub async fn get_list(
         &self,
-        list_id: i64,
+        list_id: ListId,
         start_date: Option<&str>,
         end_date: Option<&str>,
     ) -> Result<GetListResponse> {
@@ -368,7 +369,7 @@ impl ContactsApi {
     /// Update a list
     pub async fn update_list(
         &self,
-        list_id: i64,
+        list_id: ListId,
         body: &UpdateListRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/contacts/lists/{list_id}");
@@ -382,7 +383,7 @@ impl ContactsApi {
     /// Get contacts in a list
     pub async fn get_contacts_from_list(
         &self,
-        list_id: i64,
+        list_id: ListId,
         modified_since: Option<&str>,
         limit: Option<i64>,
         offset: Option<i64>,
@@ -413,7 +414,7 @@ impl ContactsApi {
     /// Add existing contacts to a list
     pub async fn add_contact_to_list(
         &self,
-        list_id: i64,
+        list_id: ListId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/contacts/lists/{list_id}/contacts/add");
@@ -427,7 +428,7 @@ impl ContactsApi {
     /// Delete a contact from a list
     pub async fn remove_contact_from_list(
         &self,
-        list_id: i64,
+        list_id: ListId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/contacts/lists/{list_id}/contacts/remove");
@@ -467,7 +468,7 @@ impl ContactsApi {
     /// Delete a contact
     pub async fn delete_contact(
         &self,
-        identifier: serde_json::Value,
+        identifier: &Email,
         identifier_type: Option<DeleteContactIdentifierType>,
     ) -> Result<serde_json::Value> {
         let path = format!("/contacts/{identifier}");
@@ -486,7 +487,7 @@ impl ContactsApi {
     /// Get a contact's details
     pub async fn get_contact_info(
         &self,
-        identifier: serde_json::Value,
+        identifier: &Email,
         identifier_type: Option<GetContactInfoIdentifierType>,
         start_date: Option<&str>,
         end_date: Option<&str>,
@@ -513,7 +514,7 @@ impl ContactsApi {
     /// Update a contact
     pub async fn update_contact(
         &self,
-        identifier: serde_json::Value,
+        identifier: &Email,
         body: &UpdateContactRequest,
         identifier_type: Option<UpdateContactIdentifierType>,
     ) -> Result<serde_json::Value> {
@@ -534,7 +535,7 @@ impl ContactsApi {
     /// Get email campaigns' statistics for a contact
     pub async fn get_contact_stats(
         &self,
-        identifier: serde_json::Value,
+        identifier: &Email,
         start_date: Option<&str>,
         end_date: Option<&str>,
     ) -> Result<GetContactStatsResponse> {

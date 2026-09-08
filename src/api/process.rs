@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Process endpoints.
@@ -45,7 +46,7 @@ impl ProcessApi {
     }
 
     /// Get process details
-    pub async fn get_process(&self, process_id: i64) -> Result<GetProcessResponse> {
+    pub async fn get_process(&self, process_id: ProcessId) -> Result<GetProcessResponse> {
         let path = format!("/processes/{process_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);

@@ -43,8 +43,16 @@ def clean_doc(doc, indent=""):
     out = []
     for line in lines:
         cleaned = line.replace('/*', '/ *').replace('*/', '* /')
+        # Wrap bare URLs like https://... into <https://...>
+        cleaned = re.sub(r'(?<!<)(https?://[^\s\)]+)(?!>)', r'<\1>', cleaned)
+        # Escape raw markdown brackets that rustdoc treats as intra-doc links
+        cleaned = re.sub(r'\[(object|string|integer|boolean|number|array|true|false)\]', r'\[\1\]', cleaned)
         out.append(f"{indent}/// {cleaned}")
     return "\n".join(out) + "\n"
+
+def synthesize_operation_id(method, path):
+    clean_p = path.strip('/').replace('/', '_').replace('{', '').replace('}', '').replace('-', '_')
+    return to_snake_case(f"{method.lower()}_{clean_p}")
 
 with open('swagger_definition_v3.json') as f:
     spec = json.load(f)
@@ -70,6 +78,8 @@ def resolve_primitive_type(schema):
             return 'time::Date'
         if fmt == 'binary':
             return 'bytes::Bytes'
+        if fmt == 'email':
+            return 'crate::types::Email'
         return 'String'
     return 'serde_json::Value'
 
@@ -200,19 +210,88 @@ def resolve_type(schema, hint_name):
     
     return resolve_primitive_type(schema)
 
+def map_param_to_newtype(tag, param_name, param_in, schema):
+    name_low = param_name.lower().replace('-', '').replace('_', '')
+    
+    if name_low in ['email', 'identifier'] or schema.get('format') == 'email':
+        return 'crate::types::Email'
+    if name_low in ['phonenumber', 'contactnumber'] or schema.get('format') == 'mobile':
+        return 'crate::types::PhoneNumber'
+    if name_low in ['domain', 'domainname']:
+        return 'crate::types::DomainName'
+    if name_low in ['contactid']:
+        return 'crate::types::ContactId'
+    if name_low in ['campaignid']:
+        return 'crate::types::CampaignId'
+    if name_low in ['templateid']:
+        return 'crate::types::TemplateId'
+    if name_low in ['webhookid']:
+        return 'crate::types::WebhookId'
+    if name_low in ['processid']:
+        return 'crate::types::ProcessId'
+    if name_low in ['listid']:
+        return 'crate::types::ListId'
+    if name_low in ['folderid']:
+        return 'crate::types::FolderId'
+    if name_low in ['senderid']:
+        return 'crate::types::SenderId'
+    if name_low in ['segmentid']:
+        return 'crate::types::SegmentId'
+    if name_low in ['pipelineid']:
+        return 'crate::types::PipelineId'
+    if name_low in ['passid']:
+        return 'crate::types::PassId'
+    if name_low in ['pid']:
+        return 'crate::types::ProgramId'
+    if name_low in ['gid']:
+        return 'crate::types::TierGroupId'
+    if name_low in ['tid']:
+        return 'crate::types::TierId'
+    if name_low in ['rid']:
+        return 'crate::types::RewardId'
+    if name_low in ['conversionsourceid']:
+        return 'crate::types::ConversionSourceId'
+    if name_low in ['messageid']:
+        return 'crate::types::MessageId'
+    if name_low in ['couponid']:
+        return 'crate::types::CouponId'
+    
+    if param_in == 'path' and name_low == 'id':
+        if tag in ['Deals', 'deals']: return 'crate::types::DealId'
+        if tag in ['Companies', 'companies']: return 'crate::types::CompanyId'
+        if tag == 'Tasks': return 'crate::types::TaskId'
+        if tag == 'Notes': return 'crate::types::NoteId'
+        if tag == 'Files': return 'crate::types::MessageId'
+
+    return None
+
 # 1. Component schemas
 for name, schema in spec.get('components', {}).get('schemas', {}).items():
     extract_schema_definition(to_pascal_case(name), schema)
 
 # 2. Extract schemas from operations (request bodies, response bodies, and parameters)
 tag_operations = defaultdict(list)
+seen_op_ids = defaultdict(set)
+
 for path, path_item in spec.get('paths', {}).items():
     for method, op in path_item.items():
-        if not isinstance(op, dict) or 'operationId' not in op:
+        if not isinstance(op, dict):
             continue
         raw_tag = op.get('tags', ['General'])[0]
+        # Normalize tags
+        if raw_tag.lower() == 'deals': raw_tag = 'Deals'
+        if raw_tag.lower() == 'companies': raw_tag = 'Companies'
         tag = to_pascal_case(raw_tag)
-        op_id = op['operationId']
+        
+        op_id = op.get('operationId')
+        if not op_id:
+            op_id = synthesize_operation_id(method, path)
+        
+        # Avoid collisions within same tag
+        if op_id in seen_op_ids[tag]:
+            op_id = f"{op_id}_{method.lower()}"
+        seen_op_ids[tag].add(op_id)
+        
         pascal_op_id = to_pascal_case(op_id)
         
         # Process parameters
@@ -280,6 +359,7 @@ for tag, ops in tag_operations.items():
         f.write("use crate::client::BrevoClient;\n")
         f.write("use crate::error::{Error, Result};\n")
         f.write("use crate::models::*;\n")
+        f.write("use crate::types::*;\n")
         f.write("use reqwest::Method;\n\n")
         f.write(f"/// Client for {tag} endpoints.\n")
         f.write("#[derive(Clone, Debug)]\n")
@@ -304,7 +384,13 @@ for tag, ops in tag_operations.items():
                 p_name = p['name']
                 p_rust_name = to_snake_case(p_name)
                 p_schema = p.get('schema', {})
-                p_type = resolve_type(p_schema, f"{to_pascal_case(op['operationId'])}{to_pascal_case(p_name)}")
+                
+                custom_newtype = map_param_to_newtype(tag, p_name, p_in, p_schema)
+                if custom_newtype:
+                    p_type = custom_newtype
+                else:
+                    p_type = resolve_type(p_schema, f"{to_pascal_case(op['operationId'])}{to_pascal_case(p_name)}")
+                
                 is_req = p.get('required', False) or p_in == 'path'
                 
                 if p_in == 'path':
@@ -317,6 +403,12 @@ for tag, ops in tag_operations.items():
             for p_name, p_rust_name, p_type in path_params:
                 if p_type == "String":
                     args.append(f"{p_rust_name}: &str")
+                elif p_type.startswith("crate::types::"):
+                    simple_type = p_type.replace("crate::types::", "")
+                    if simple_type in ['Email', 'DomainName', 'DealId', 'CompanyId', 'TaskId', 'NoteId', 'PipelineId', 'PassId', 'ProgramId', 'TierGroupId', 'TierId', 'RewardId', 'ConversionSourceId', 'MessageId', 'CouponId', 'PhoneNumber']:
+                        args.append(f"{p_rust_name}: &{simple_type}")
+                    else:
+                        args.append(f"{p_rust_name}: {simple_type}")
                 else:
                     args.append(f"{p_rust_name}: {p_type}")
             
@@ -324,20 +416,25 @@ for tag, ops in tag_operations.items():
                 args.append(f"body: &{op['req_type']}")
             
             for p_name, p_rust_name, p_type, is_req in query_params:
+                simple_p_type = p_type.replace("crate::types::", "")
                 if is_req:
-                    if p_type == "String":
+                    if simple_p_type == "String":
                         args.append(f"{p_rust_name}: &str")
-                    elif p_type.startswith("Vec<"):
-                        args.append(f"{p_rust_name}: &[{p_type[4:-1]}]")
+                    elif simple_p_type.startswith("Vec<"):
+                        args.append(f"{p_rust_name}: &[{simple_p_type[4:-1]}]")
+                    elif simple_p_type in ['Email', 'DomainName', 'PhoneNumber']:
+                        args.append(f"{p_rust_name}: &{simple_p_type}")
                     else:
-                        args.append(f"{p_rust_name}: {p_type}")
+                        args.append(f"{p_rust_name}: {simple_p_type}")
                 else:
-                    if p_type == "String":
+                    if simple_p_type == "String":
                         args.append(f"{p_rust_name}: Option<&str>")
-                    elif p_type.startswith("Vec<"):
-                        args.append(f"{p_rust_name}: Option<&[{p_type[4:-1]}]>")
+                    elif simple_p_type.startswith("Vec<"):
+                        args.append(f"{p_rust_name}: Option<&[{simple_p_type[4:-1]}]>")
+                    elif simple_p_type in ['Email', 'DomainName', 'PhoneNumber']:
+                        args.append(f"{p_rust_name}: Option<&{simple_p_type}>")
                     else:
-                        args.append(f"{p_rust_name}: Option<{p_type}>")
+                        args.append(f"{p_rust_name}: Option<{simple_p_type}>")
             
             args_str = ", ".join(args)
             resp_t = op['resp_type']
@@ -400,10 +497,10 @@ with open('src/api/mod.rs', 'w') as f:
     for mod_name, struct_name, _ in api_modules:
         f.write(f"pub use {mod_name}::{struct_name};\n")
 
-# Also add accessor methods on BrevoClient
+# Also add accessor methods on BrevoClient with resolved doc links
 client_methods = ""
 for mod_name, struct_name, tag in api_modules:
-    client_methods += f"    /// Access the [`{struct_name}`] endpoints.\n"
+    client_methods += f"    /// Access the [`api::{struct_name}`] endpoints.\n"
     client_methods += f"    #[must_use]\n"
     client_methods += f"    pub fn {mod_name}(&self) -> api::{struct_name} {{\n"
     client_methods += f"        api::{struct_name}::new(self.clone())\n"
@@ -412,8 +509,8 @@ for mod_name, struct_name, tag in api_modules:
 with open('src/client_accessors.rs', 'w') as f:
     f.write("use crate::api;\n")
     f.write("use crate::client::BrevoClient;\n\n")
-    f.write("impl BrevoClient {{\n")
+    f.write("impl BrevoClient {\n")
     f.write(client_methods)
     f.write("}\n")
 
-print(f"Generated {len(api_modules)} API resource modules in src/api/")
+print(f"Generated {len(api_modules)} API resource modules in src/api/ covering all {sum(len(v) for v in tag_operations.values())} endpoints")

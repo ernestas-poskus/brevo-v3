@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for WhatsAppCampaigns endpoints.
@@ -128,7 +129,7 @@ impl WhatsAppCampaignsApi {
     /// Send your WhatsApp template for approval
     pub async fn send_whats_app_template_approval(
         &self,
-        template_id: i64,
+        template_id: TemplateId,
     ) -> Result<serde_json::Value> {
         let path = format!("/whatsappCampaigns/template/approval/{template_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -138,7 +139,10 @@ impl WhatsAppCampaignsApi {
     }
 
     /// Delete a WhatsApp campaign
-    pub async fn delete_whats_app_campaign(&self, campaign_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_whats_app_campaign(
+        &self,
+        campaign_id: CampaignId,
+    ) -> Result<serde_json::Value> {
         let path = format!("/whatsappCampaigns/{campaign_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -149,7 +153,7 @@ impl WhatsAppCampaignsApi {
     /// Get a WhatsApp campaign
     pub async fn get_whats_app_campaign(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
     ) -> Result<GetWhatsAppCampaignResponse> {
         let path = format!("/whatsappCampaigns/{campaign_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -161,7 +165,7 @@ impl WhatsAppCampaignsApi {
     /// Update a WhatsApp campaign
     pub async fn update_whats_app_campaign(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &UpdateWhatsAppCampaignRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/whatsappCampaigns/{campaign_id}");

@@ -54,6 +54,70 @@ impl AsRef<str> for Email {
     }
 }
 
+impl std::ops::Deref for Email {
+    type Target = str;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+/// Strongly typed PhoneNumber wrapper.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+#[serde(transparent)]
+pub struct PhoneNumber(String);
+
+impl PhoneNumber {
+    /// Creates a new validated `PhoneNumber` instance.
+    pub fn new(phone: impl Into<String>) -> Result<Self, crate::error::Error> {
+        let s = phone.into();
+        let trimmed = s.trim();
+        if trimmed.is_empty() {
+            return Err(crate::error::Error::Invariant(
+                "Phone number cannot be empty".to_string(),
+            ));
+        }
+        Ok(Self(trimmed.to_string()))
+    }
+
+    /// Returns a string slice of the phone number.
+    #[must_use]
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
+
+    /// Consumes into inner String.
+    #[must_use]
+    pub fn into_inner(self) -> String {
+        self.0
+    }
+}
+
+impl fmt::Display for PhoneNumber {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl FromStr for PhoneNumber {
+    type Err = crate::error::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::new(s)
+    }
+}
+
+impl AsRef<str> for PhoneNumber {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
+
+impl std::ops::Deref for PhoneNumber {
+    type Target = str;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
 /// Macro to define zero-cost, type-safe ID newtypes.
 #[macro_export]
 macro_rules! define_id {
@@ -158,6 +222,13 @@ macro_rules! define_id {
                 &self.0
             }
         }
+
+        impl ::std::ops::Deref for $name {
+            type Target = str;
+            fn deref(&self) -> &Self::Target {
+                &self.0
+            }
+        }
     };
 }
 
@@ -181,6 +252,7 @@ define_id!(
 define_id!(ListId, i64, "Unique identifier for a Contact List.");
 define_id!(FolderId, i64, "Unique identifier for a Folder.");
 define_id!(SenderId, i64, "Unique identifier for a Sender.");
+define_id!(SegmentId, i64, "Unique identifier for a Contact Segment.");
 define_id!(UserId, i64, "Unique identifier for a User.");
 
 define_id!(str MessageId, "Unique message identifier returned by transactional services.");
@@ -191,3 +263,10 @@ define_id!(str NoteId, "Unique note identifier.");
 define_id!(str CouponId, "Unique coupon identifier.");
 define_id!(str DomainName, "Domain name wrapper.");
 define_id!(str OrganizationId, "Organization identifier.");
+define_id!(str PipelineId, "CRM Pipeline identifier.");
+define_id!(str PassId, "Wallet Pass identifier.");
+define_id!(str ProgramId, "Loyalty Program identifier.");
+define_id!(str TierGroupId, "Loyalty Tier Group identifier.");
+define_id!(str TierId, "Loyalty Tier identifier.");
+define_id!(str RewardId, "Loyalty Reward identifier.");
+define_id!(str ConversionSourceId, "Conversion Source identifier.");

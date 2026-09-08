@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for EmailCampaigns endpoints.
@@ -99,7 +100,10 @@ impl EmailCampaignsApi {
     }
 
     /// Delete an email campaign
-    pub async fn delete_email_campaign(&self, campaign_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_email_campaign(
+        &self,
+        campaign_id: CampaignId,
+    ) -> Result<serde_json::Value> {
         let path = format!("/emailCampaigns/{campaign_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -110,7 +114,7 @@ impl EmailCampaignsApi {
     /// Get an email campaign report
     pub async fn get_email_campaign(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         statistics: Option<GetEmailCampaignStatistics>,
         exclude_html_content: Option<bool>,
     ) -> Result<GetEmailCampaignResponse> {
@@ -133,7 +137,7 @@ impl EmailCampaignsApi {
     /// Update an email campaign
     pub async fn update_email_campaign(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &UpdateEmailCampaignRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/emailCampaigns/{campaign_id}");
@@ -147,7 +151,7 @@ impl EmailCampaignsApi {
     /// Get an A/B test email campaign results
     pub async fn get_ab_test_campaign_result(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
     ) -> Result<GetAbTestCampaignResultResponse> {
         let path = format!("/emailCampaigns/{campaign_id}/abTestCampaignResult");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -159,7 +163,7 @@ impl EmailCampaignsApi {
     /// Export the recipients of an email campaign
     pub async fn email_export_recipients(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &EmailExportRecipientsRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/emailCampaigns/{campaign_id}/exportRecipients");
@@ -171,7 +175,10 @@ impl EmailCampaignsApi {
     }
 
     /// Send an email campaign immediately, based on campaignId
-    pub async fn send_email_campaign_now(&self, campaign_id: i64) -> Result<serde_json::Value> {
+    pub async fn send_email_campaign_now(
+        &self,
+        campaign_id: CampaignId,
+    ) -> Result<serde_json::Value> {
         let path = format!("/emailCampaigns/{campaign_id}/sendNow");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::POST, url);
@@ -182,7 +189,7 @@ impl EmailCampaignsApi {
     /// Send the report of a campaign
     pub async fn send_report(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/emailCampaigns/{campaign_id}/sendReport");
@@ -196,7 +203,7 @@ impl EmailCampaignsApi {
     /// Send an email campaign to your test list
     pub async fn send_test_email(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/emailCampaigns/{campaign_id}/sendTest");
@@ -210,7 +217,7 @@ impl EmailCampaignsApi {
     /// Get a shared template url
     pub async fn get_shared_template_url(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
     ) -> Result<GetSharedTemplateUrlResponse> {
         let path = format!("/emailCampaigns/{campaign_id}/sharedUrl");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -222,7 +229,7 @@ impl EmailCampaignsApi {
     /// Update an email campaign status
     pub async fn update_campaign_status(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/emailCampaigns/{campaign_id}/status");

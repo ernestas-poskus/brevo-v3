@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Program endpoints.
@@ -59,7 +60,7 @@ impl ProgramApi {
     }
 
     /// Delete Loyalty Program
-    pub async fn delete_loyalty_program(&self, pid: &str) -> Result<serde_json::Value> {
+    pub async fn delete_loyalty_program(&self, pid: &ProgramId) -> Result<serde_json::Value> {
         let path = format!("/loyalty/config/programs/{pid}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -68,7 +69,7 @@ impl ProgramApi {
     }
 
     /// Get loyalty program Info
-    pub async fn get_loyalty_program_info(&self, pid: &str) -> Result<serde_json::Value> {
+    pub async fn get_loyalty_program_info(&self, pid: &ProgramId) -> Result<serde_json::Value> {
         let path = format!("/loyalty/config/programs/{pid}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);
@@ -79,7 +80,7 @@ impl ProgramApi {
     /// Partially update loyalty program
     pub async fn partially_update_loyalty_program(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         body: &PartiallyUpdateLoyaltyProgramRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/config/programs/{pid}");
@@ -93,7 +94,7 @@ impl ProgramApi {
     /// Update loyalty program
     pub async fn update_loyalty_program(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         body: &UpdateLoyaltyProgramRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/config/programs/{pid}");
@@ -107,8 +108,8 @@ impl ProgramApi {
     /// Get Subscription Data
     pub async fn get_parameter_subscription_info(
         &self,
-        pid: &str,
-        contact_id: Option<&str>,
+        pid: &ProgramId,
+        contact_id: Option<ContactId>,
         params: Option<&str>,
         loyalty_subscription_id: Option<&str>,
         include_internal: Option<bool>,
@@ -138,7 +139,7 @@ impl ProgramApi {
     /// Delete subscription
     pub async fn delete_contact_subscription(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         cid: i64,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/config/programs/{pid}/contact/{cid}");
@@ -149,7 +150,7 @@ impl ProgramApi {
     }
 
     /// Publish loyalty program
-    pub async fn publish_loyalty_program(&self, pid: &str) -> Result<serde_json::Value> {
+    pub async fn publish_loyalty_program(&self, pid: &ProgramId) -> Result<serde_json::Value> {
         let path = format!("/loyalty/config/programs/{pid}/publish");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::POST, url);
@@ -160,7 +161,7 @@ impl ProgramApi {
     /// Delete subscription member
     pub async fn delete_contact_members(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         member_contact_ids: &str,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/config/programs/{pid}/subscription-members");
@@ -177,7 +178,7 @@ impl ProgramApi {
     /// Create subscription member
     pub async fn subscribe_member_to_a_subscription(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         body: &SubscribeMemberToASubscriptionRequest,
     ) -> Result<SubscribeMemberToASubscriptionResponse> {
         let path = format!("/loyalty/config/programs/{pid}/subscription-members");
@@ -191,7 +192,7 @@ impl ProgramApi {
     /// Create subscription
     pub async fn subscribe_to_loyalty_program(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         body: &SubscribeToLoyaltyProgramRequest,
     ) -> Result<SubscribeToLoyaltyProgramResponse> {
         let path = format!("/loyalty/config/programs/{pid}/subscriptions");

@@ -213,7 +213,7 @@ pub struct Inviteuser {
     pub all_features_access: bool,
     /// Email address for the organization
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     #[serde(rename = "privileges")]
     pub privileges: Vec<InviteuserPrivilegesItem>,
 }
@@ -325,7 +325,7 @@ pub struct GetContactDetails {
     pub created_at: String,
     /// Email address of the contact for which you requested the details
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Blacklist status for email campaigns (true=blacklisted, false=not blacklisted)
     #[serde(rename = "emailBlacklisted")]
     pub email_blacklisted: bool,
@@ -992,7 +992,7 @@ pub struct ConversationsMessage {
     /// `true` for pushed messages
     #[serde(rename = "isPushed", skip_serializing_if = "Option::is_none", default)]
     pub is_pushed: Option<bool>,
-    /// `true` for automatic messages from “Targeted chats & triggers” and API (https://developers.brevo.com/docs/javascript-api-reference#sendautomessage)
+    /// `true` for automatic messages from “Targeted chats & triggers” and API (<https://developers.brevo.com/docs/javascript-api-reference#sendautomessage>)
     #[serde(rename = "isTrigger", skip_serializing_if = "Option::is_none", default)]
     pub is_trigger: Option<bool>,
     /// Unescaped HTML content of the message (may include unsafe HTML).
@@ -2362,7 +2362,7 @@ pub struct ValueResponse {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeResponse {
-    /// array[object]
+    /// array\[object\]
     #[serde(rename = "args", skip_serializing_if = "Option::is_none", default)]
     pub args: Option<Vec<serde_json::Value>>,
     /// Array values for rule definition
@@ -2863,7 +2863,7 @@ pub struct GetExtendedCampaignOverviewEmailExpirationDate {
 pub struct GetExtendedCampaignOverviewSender {
     /// Sender email of the campaign
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Sender id of the campaign
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<i64>,
@@ -2992,7 +2992,7 @@ pub struct GetExtendedCampaignOverview {
     pub recurring: Option<bool>,
     /// Email defined as the "Reply to" of the campaign
     #[serde(rename = "replyTo")]
-    pub reply_to: String,
+    pub reply_to: crate::types::Email,
     /// Total number of non-delivered campaigns for a particular campaign id.
     #[serde(
         rename = "returnBounce",
@@ -3176,7 +3176,7 @@ pub struct SendReportEmail {
     pub body: String,
     /// Email addresses of the recipients
     #[serde(rename = "to")]
-    pub to: Vec<String>,
+    pub to: Vec<crate::types::Email>,
 }
 
 /// Language of email content for campaign report sending.
@@ -3229,7 +3229,7 @@ pub struct SendReport {
 pub struct SendTestEmail {
     /// List of the email addresses of the recipients whom you wish to send the test mail. _If left empty, the test mail will be sent to your entire test list. You can not send more than 50 test emails per day_.
     #[serde(rename = "emailTo", skip_serializing_if = "Option::is_none", default)]
-    pub email_to: Option<Vec<String>>,
+    pub email_to: Option<Vec<crate::types::Email>>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -3240,7 +3240,7 @@ pub struct PostSendFailed {
         skip_serializing_if = "Option::is_none",
         default
     )]
-    pub black_listed_emails: Option<Vec<String>>,
+    pub black_listed_emails: Option<Vec<crate::types::Email>>,
     /// Response code
     #[serde(rename = "code")]
     pub code: String,
@@ -3252,13 +3252,13 @@ pub struct PostSendFailed {
         skip_serializing_if = "Option::is_none",
         default
     )]
-    pub unexisting_emails: Option<Vec<String>>,
+    pub unexisting_emails: Option<Vec<crate::types::Email>>,
     #[serde(
         rename = "withoutListEmails",
         skip_serializing_if = "Option::is_none",
         default
     )]
-    pub without_list_emails: Option<Vec<String>>,
+    pub without_list_emails: Option<Vec<crate::types::Email>>,
 }
 
 /// Note:- **replicateTemplate** status will be available **only for template type campaigns.**
@@ -3546,7 +3546,7 @@ pub struct Note {
     /// Unique note Id
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<String>,
-    /// Content of the note. Supports HTML for rich text formatting. Supported tags include: `<p>` (paragraph), `<b>` / `<strong>` (bold), `<i>` / `<em>` (italic), `<u>` (underline), `<br>` (line break), `<a href="...">` (labelled hyperlink). Example labelled link: `<a href="https://example.com">Link text</a>`.
+    /// Content of the note. Supports HTML for rich text formatting. Supported tags include: `<p>` (paragraph), `<b>` / `<strong>` (bold), `<i>` / `<em>` (italic), `<u>` (underline), `<br>` (line break), `<a href="...">` (labelled hyperlink). Example labelled link: `<a href="<https://example.com">Link> text</a>`.
     #[serde(rename = "text")]
     pub text: String,
     /// Contact ids linked to a note
@@ -3598,7 +3598,7 @@ pub struct NoteData {
     /// Deal Ids linked to a note
     #[serde(rename = "dealIds", skip_serializing_if = "Option::is_none", default)]
     pub deal_ids: Option<Vec<String>>,
-    /// Content of the note. Supports HTML for rich text formatting. Supported tags include: `<p>` (paragraph), `<b>` / `<strong>` (bold), `<i>` / `<em>` (italic), `<u>` (underline), `<br>` (line break), `<a href="...">` (labelled hyperlink). Example labelled link: `<a href="https://example.com">Link text</a>`.
+    /// Content of the note. Supports HTML for rich text formatting. Supported tags include: `<p>` (paragraph), `<b>` / `<strong>` (bold), `<i>` / `<em>` (italic), `<u>` (underline), `<br>` (line break), `<a href="...">` (labelled hyperlink). Example labelled link: `<a href="<https://example.com">Link> text</a>`.
     #[serde(rename = "text")]
     pub text: String,
 }
@@ -3757,7 +3757,7 @@ pub struct TaskReminder {
 pub struct GetSmtpTemplateOverviewSender {
     /// From email for the template
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Sender id of the template
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<String>,
@@ -3796,7 +3796,7 @@ pub struct GetSmtpTemplateOverview {
     pub name: String,
     /// Email defined as the "Reply to" for the template
     #[serde(rename = "replyTo")]
-    pub reply_to: String,
+    pub reply_to: crate::types::Email,
     #[serde(rename = "sender")]
     pub sender: GetSmtpTemplateOverviewSender,
     /// Subject of the template
@@ -4084,7 +4084,7 @@ pub struct GetAccountResponseRelayData {
     pub relay: String,
     /// Email to use as login on transactional platform
     #[serde(rename = "userName")]
-    pub user_name: String,
+    pub user_name: crate::types::Email,
 }
 
 /// Information about your transactional email account
@@ -4117,7 +4117,7 @@ pub struct GetAccountResponse {
     pub company_name: String,
     /// Login Email
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// First Name
     #[serde(rename = "firstName")]
     pub first_name: String,
@@ -4146,6 +4146,112 @@ pub struct GetAccountResponse {
     /// Information about your transactional email account
     #[serde(rename = "relay")]
     pub relay: GetAccountResponseRelay,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateGroupRequest {
+    /// The name of the group of sub-accounts
+    #[serde(rename = "groupName")]
+    pub group_name: String,
+    /// Pass the list of sub-account Ids to be included in the group
+    #[serde(
+        rename = "subAccountIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sub_account_ids: Option<Vec<i64>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateGroupResponse {
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateGroupUnlinkGroupIdSubAccountsRequest {
+    /// List of sub-account ids
+    #[serde(rename = "subAccountIds")]
+    pub sub_account_ids: Vec<i64>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateGroupIdResponseGroup {
+    /// Group creation date
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<String>,
+    /// Name of the group
+    #[serde(rename = "groupName", skip_serializing_if = "Option::is_none", default)]
+    pub group_name: Option<String>,
+    /// Group id
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateGroupIdResponseSubAccountsItem {
+    /// Name of the sub-account organzation
+    #[serde(
+        rename = "companyName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub company_name: Option<String>,
+    /// Creation date of the sub-account organzation
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<String>,
+    /// Id of the sub-account organzation
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<i64>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateGroupIdResponseUsersItem {
+    /// Email address of the user
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
+    pub email: Option<String>,
+    /// First name of the user
+    #[serde(rename = "firstName", skip_serializing_if = "Option::is_none", default)]
+    pub first_name: Option<String>,
+    /// Last name of the user
+    #[serde(rename = "lastName", skip_serializing_if = "Option::is_none", default)]
+    pub last_name: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateGroupIdResponse {
+    #[serde(rename = "group", skip_serializing_if = "Option::is_none", default)]
+    pub group: Option<GetCorporateGroupIdResponseGroup>,
+    #[serde(
+        rename = "sub-accounts",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sub_accounts: Option<Vec<GetCorporateGroupIdResponseSubAccountsItem>>,
+    #[serde(rename = "users", skip_serializing_if = "Option::is_none", default)]
+    pub users: Option<Vec<GetCorporateGroupIdResponseUsersItem>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateGroupIdRequest {
+    /// The name of the group of sub-accounts
+    #[serde(rename = "groupName", skip_serializing_if = "Option::is_none", default)]
+    pub group_name: Option<String>,
+    /// Pass the list of sub-account Ids to be included in the group
+    #[serde(
+        rename = "subAccountIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sub_account_ids: Option<Vec<i64>>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -4257,6 +4363,914 @@ pub struct GetCorporateInvitedUsersListResponse {
     pub users: Option<Vec<GetCorporateInvitedUsersListResponseUsersItem>>,
 }
 
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateIpResponseItem {
+    #[serde(rename = "domain", skip_serializing_if = "Option::is_none", default)]
+    pub domain: Option<String>,
+    #[serde(rename = "ip", skip_serializing_if = "Option::is_none", default)]
+    pub ip: Option<String>,
+    #[serde(
+        rename = "transactional",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub transactional: Option<bool>,
+}
+
+/// Billing address of master account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateMasterAccountResponseBillingInfoAddress {
+    /// Country code
+    #[serde(
+        rename = "countryCode",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub country_code: Option<String>,
+    /// Locality
+    #[serde(rename = "locality", skip_serializing_if = "Option::is_none", default)]
+    pub locality: Option<String>,
+    /// Postal code
+    #[serde(
+        rename = "postalCode",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub postal_code: Option<String>,
+    /// State code
+    #[serde(rename = "stateCode", skip_serializing_if = "Option::is_none", default)]
+    pub state_code: Option<String>,
+    /// Street address
+    #[serde(
+        rename = "streetAddress",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub street_address: Option<String>,
+}
+
+/// Billing name of master account holder
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateMasterAccountResponseBillingInfoName {
+    /// Last name for billing
+    #[serde(
+        rename = "familyName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub family_name: Option<String>,
+    /// First name for billing
+    #[serde(rename = "givenName", skip_serializing_if = "Option::is_none", default)]
+    pub given_name: Option<String>,
+}
+
+/// Billing details of the master account organization
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateMasterAccountResponseBillingInfo {
+    /// Billing address of master account
+    #[serde(rename = "address", skip_serializing_if = "Option::is_none", default)]
+    pub address: Option<GetCorporateMasterAccountResponseBillingInfoAddress>,
+    /// Company name of master account
+    #[serde(
+        rename = "companyName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub company_name: Option<String>,
+    /// Billing email id of master account
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
+    pub email: Option<String>,
+    /// Billing name of master account holder
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<GetCorporateMasterAccountResponseBillingInfoName>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateMasterAccountResponsePlanInfoFeaturesItem {
+    /// Name of the feature
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Quantity provided in the plan
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Quantity with overages provided in the plan (only
+    /// applicable on ENTv2)
+    #[serde(
+        rename = "quantityWithOverages",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub quantity_with_overages: Option<i64>,
+    /// Quantity remaining in the plan
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+    /// Unit value of the feature
+    #[serde(rename = "unitValue", skip_serializing_if = "Option::is_none", default)]
+    pub unit_value: Option<String>,
+    /// Quantity consumed by master
+    #[serde(rename = "used", skip_serializing_if = "Option::is_none", default)]
+    pub used: Option<i64>,
+    /// Quantity consumed by sub-organizations over the
+    /// admin plan limit (only applicable on ENTv2)
+    #[serde(
+        rename = "usedOverages",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub used_overages: Option<i64>,
+}
+
+/// Plan period type
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCorporateMasterAccountResponsePlanInfoPlanPeriod {
+    #[serde(rename = "month")]
+    Month,
+    #[serde(rename = "year")]
+    Year,
+}
+impl Default for GetCorporateMasterAccountResponsePlanInfoPlanPeriod {
+    fn default() -> Self {
+        Self::Month
+    }
+}
+impl core::fmt::Display for GetCorporateMasterAccountResponsePlanInfoPlanPeriod {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Month => write!(f, "month"),
+            Self::Year => write!(f, "year"),
+        }
+    }
+}
+
+/// Plan details
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateMasterAccountResponsePlanInfo {
+    /// Plan currency
+    #[serde(
+        rename = "currencyCode",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub currency_code: Option<String>,
+    /// List of provided features in the plan
+    #[serde(rename = "features", skip_serializing_if = "Option::is_none", default)]
+    pub features: Option<Vec<GetCorporateMasterAccountResponsePlanInfoFeaturesItem>>,
+    /// Timestamp of next billing date
+    #[serde(
+        rename = "nextBillingAt",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub next_billing_at: Option<i64>,
+    /// Plan period type
+    #[serde(
+        rename = "planPeriod",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub plan_period: Option<GetCorporateMasterAccountResponsePlanInfoPlanPeriod>,
+    /// Plan amount
+    #[serde(rename = "price", skip_serializing_if = "Option::is_none", default)]
+    pub price: Option<f64>,
+    /// Number of sub-accounts
+    #[serde(
+        rename = "subAccounts",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sub_accounts: Option<i64>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateMasterAccountResponse {
+    /// Billing details of the master account organization
+    #[serde(
+        rename = "billingInfo",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub billing_info: Option<GetCorporateMasterAccountResponseBillingInfo>,
+    /// Company name of master account organization
+    #[serde(
+        rename = "companyName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub company_name: Option<String>,
+    /// Currency code of the master account organization
+    #[serde(
+        rename = "currencyCode",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub currency_code: Option<String>,
+    /// Email id of master account
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
+    pub email: Option<String>,
+    /// Unique identifier of the master account organization
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<i64>,
+    /// Plan details
+    #[serde(rename = "planInfo", skip_serializing_if = "Option::is_none", default)]
+    pub plan_info: Option<GetCorporateMasterAccountResponsePlanInfo>,
+    /// Timezone of the master account organization
+    #[serde(rename = "timezone", skip_serializing_if = "Option::is_none", default)]
+    pub timezone: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateSsoTokenRequest {
+    /// User email of admin account
+    #[serde(rename = "email")]
+    pub email: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountResponseSubAccountsItemGroupsItem {
+    /// Group identifier
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Name of the group
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountResponseSubAccountsItem {
+    /// Whether the sub-account is active or not
+    #[serde(rename = "active")]
+    pub active: bool,
+    /// Name of the sub-account company
+    #[serde(rename = "companyName")]
+    pub company_name: String,
+    /// Timestamp when the sub-account was created
+    #[serde(rename = "createdAt")]
+    pub created_at: i64,
+    /// Group details
+    #[serde(rename = "groups")]
+    pub groups: Vec<GetCorporateSubAccountResponseSubAccountsItemGroupsItem>,
+    /// id of the sub-account
+    #[serde(rename = "id")]
+    pub id: i64,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountResponse {
+    /// Total number of subaccounts
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none", default)]
+    pub count: Option<i64>,
+    #[serde(
+        rename = "subAccounts",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sub_accounts: Option<Vec<GetCorporateSubAccountResponseSubAccountsItem>>,
+}
+
+/// Set the language of the sub-account
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostCorporateSubAccountRequestLanguage {
+    #[serde(rename = "en")]
+    En,
+    #[serde(rename = "fr")]
+    Fr,
+    #[serde(rename = "it")]
+    It,
+    #[serde(rename = "es")]
+    Es,
+    #[serde(rename = "pt")]
+    Pt,
+    #[serde(rename = "de")]
+    De,
+}
+impl Default for PostCorporateSubAccountRequestLanguage {
+    fn default() -> Self {
+        Self::En
+    }
+}
+impl core::fmt::Display for PostCorporateSubAccountRequestLanguage {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::En => write!(f, "en"),
+            Self::Fr => write!(f, "fr"),
+            Self::It => write!(f, "it"),
+            Self::Es => write!(f, "es"),
+            Self::Pt => write!(f, "pt"),
+            Self::De => write!(f, "de"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateSubAccountRequest {
+    /// Set the name of the sub-account company
+    #[serde(rename = "companyName")]
+    pub company_name: String,
+    /// Email address for the organization
+    #[serde(rename = "email")]
+    pub email: String,
+    /// Set the group(s) for the sub-account
+    #[serde(rename = "groupIds", skip_serializing_if = "Option::is_none", default)]
+    pub group_ids: Option<Vec<String>>,
+    /// Set the language of the sub-account
+    #[serde(rename = "language", skip_serializing_if = "Option::is_none", default)]
+    pub language: Option<PostCorporateSubAccountRequestLanguage>,
+    /// Set the timezone of the sub-account
+    #[serde(rename = "timezone", skip_serializing_if = "Option::is_none", default)]
+    pub timezone: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateSubAccountResponse {
+    /// ID of the sub-account created
+    #[serde(rename = "id")]
+    pub id: i64,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateSubAccountIpAssociateRequest {
+    /// Pass the list of sub-account Ids to be associated with the IP
+    /// address
+    #[serde(rename = "ids")]
+    pub ids: Vec<i64>,
+    /// IP address
+    #[serde(rename = "ip")]
+    pub ip: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountIpDissociateRequest {
+    /// Pass the list of sub-account Ids to be dissociated from the IP
+    /// address
+    #[serde(rename = "ids")]
+    pub ids: Vec<i64>,
+    /// IP address
+    #[serde(rename = "ip")]
+    pub ip: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateSubAccountKeyRequest {
+    /// Id of the sub-account organization
+    #[serde(rename = "id")]
+    pub id: i64,
+    /// Name of the API key
+    #[serde(rename = "name")]
+    pub name: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateSubAccountKeyResponse {
+    /// API key
+    #[serde(rename = "key")]
+    pub key: String,
+    /// Status of the API operation.
+    #[serde(rename = "status")]
+    pub status: String,
+}
+
+/// **Set target after login success** * **automation** - Redirect
+/// to Automation after login * **email_campaign** - Redirect to
+/// Email Campaign after login * **contacts** - Redirect to Contacts
+/// after login * **landing_pages** - Redirect to Landing Pages
+/// after login * **email_transactional** - Redirect to Email
+/// Transactional after login * **senders** - Redirect to Senders
+/// after login * **sms_campaign** - Redirect to Sms Campaign after
+/// login * **sms_transactional** - Redirect to Sms Transactional
+/// after login
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostCorporateSubAccountSsoTokenRequestTarget {
+    #[serde(rename = "automation")]
+    Automation,
+    #[serde(rename = "email_campaign")]
+    EmailCampaign,
+    #[serde(rename = "contacts")]
+    Contacts,
+    #[serde(rename = "landing_pages")]
+    LandingPages,
+    #[serde(rename = "email_transactional")]
+    EmailTransactional,
+    #[serde(rename = "senders")]
+    Senders,
+    #[serde(rename = "sms_campaign")]
+    SmsCampaign,
+    #[serde(rename = "sms_transactional")]
+    SmsTransactional,
+}
+impl Default for PostCorporateSubAccountSsoTokenRequestTarget {
+    fn default() -> Self {
+        Self::Automation
+    }
+}
+impl core::fmt::Display for PostCorporateSubAccountSsoTokenRequestTarget {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Automation => write!(f, "automation"),
+            Self::EmailCampaign => write!(f, "email_campaign"),
+            Self::Contacts => write!(f, "contacts"),
+            Self::LandingPages => write!(f, "landing_pages"),
+            Self::EmailTransactional => write!(f, "email_transactional"),
+            Self::Senders => write!(f, "senders"),
+            Self::SmsCampaign => write!(f, "sms_campaign"),
+            Self::SmsTransactional => write!(f, "sms_transactional"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCorporateSubAccountSsoTokenRequest {
+    /// User email of sub-account organization
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
+    pub email: Option<String>,
+    /// Id of the sub-account organization
+    #[serde(rename = "id")]
+    pub id: i64,
+    /// **Set target after login success** * **automation** - Redirect
+    /// to Automation after login * **email_campaign** - Redirect to
+    /// Email Campaign after login * **contacts** - Redirect to Contacts
+    /// after login * **landing_pages** - Redirect to Landing Pages
+    /// after login * **email_transactional** - Redirect to Email
+    /// Transactional after login * **senders** - Redirect to Senders
+    /// after login * **sms_campaign** - Redirect to Sms Campaign after
+    /// login * **sms_transactional** - Redirect to Sms Transactional
+    /// after login
+    #[serde(rename = "target", skip_serializing_if = "Option::is_none", default)]
+    pub target: Option<PostCorporateSubAccountSsoTokenRequestTarget>,
+    /// Set the full target URL after login success. The user will land
+    /// directly on this target URL after login
+    #[serde(rename = "url", skip_serializing_if = "Option::is_none", default)]
+    pub url: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponseGroupsItem {
+    /// Group id
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Name of the group
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+}
+
+/// Email credits remaining on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoCreditsEmails {
+    /// Quantity of email messaging limits provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available email messaging limits for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// externalFeeds credits remaining on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoCreditsExternalFeeds {
+    /// Quantity of externalFeeds messaging limits
+    /// provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available externalFeeds messaging limits for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// SMS credits remaining on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoCreditsSms {
+    /// Quantity of SMS messaging limits provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available SMS messaging limits for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// Whatsapp credits remaining on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoCreditsWhatsapp {
+    /// Quantity of whatsapp messaging limits provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available whatsapp messaging limits for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// Push credits remaining on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoCreditsWpSubscribers {
+    /// Quantity of Push sending limits provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available Push sending limits for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// Credits quota and remaining credits on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoCredits {
+    /// Email credits remaining on the sub-account
+    #[serde(rename = "emails", skip_serializing_if = "Option::is_none", default)]
+    pub emails: Option<GetCorporateSubAccountIdResponsePlanInfoCreditsEmails>,
+    /// externalFeeds credits remaining on the sub-account
+    #[serde(
+        rename = "externalFeeds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub external_feeds: Option<GetCorporateSubAccountIdResponsePlanInfoCreditsExternalFeeds>,
+    /// SMS credits remaining on the sub-account
+    #[serde(rename = "sms", skip_serializing_if = "Option::is_none", default)]
+    pub sms: Option<GetCorporateSubAccountIdResponsePlanInfoCreditsSms>,
+    /// Whatsapp credits remaining on the sub-account
+    #[serde(rename = "whatsapp", skip_serializing_if = "Option::is_none", default)]
+    pub whatsapp: Option<GetCorporateSubAccountIdResponsePlanInfoCreditsWhatsapp>,
+    /// Push credits remaining on the sub-account
+    #[serde(
+        rename = "wpSubscribers",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub wp_subscribers: Option<GetCorporateSubAccountIdResponsePlanInfoCreditsWpSubscribers>,
+}
+
+/// Inbox details / Not applicable on ENTv2
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoFeaturesInbox {
+    /// Quantity of inbox provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available inboxes for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// Landing page details / Not applicable on ENTv2
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoFeaturesLandingPage {
+    /// Quantity of landing pages provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available landing pages for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// Sales and service users to use phone, sales and
+/// conversations
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoFeaturesSalesUsers {
+    /// Quantity of sales users provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available sales users for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// Marketing users to manage the marketing channels
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoFeaturesUsers {
+    /// Quantity of marketing users provided
+    #[serde(rename = "quantity", skip_serializing_if = "Option::is_none", default)]
+    pub quantity: Option<i64>,
+    /// Available marketing users for use
+    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none", default)]
+    pub remaining: Option<i64>,
+}
+
+/// Features available on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfoFeatures {
+    /// Inbox details / Not applicable on ENTv2
+    #[serde(rename = "inbox", skip_serializing_if = "Option::is_none", default)]
+    pub inbox: Option<GetCorporateSubAccountIdResponsePlanInfoFeaturesInbox>,
+    /// Landing page details / Not applicable on ENTv2
+    #[serde(
+        rename = "landingPage",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub landing_page: Option<GetCorporateSubAccountIdResponsePlanInfoFeaturesLandingPage>,
+    /// Sales and service users to use phone, sales and
+    /// conversations
+    #[serde(
+        rename = "salesUsers",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sales_users: Option<GetCorporateSubAccountIdResponsePlanInfoFeaturesSalesUsers>,
+    /// Marketing users to manage the marketing channels
+    #[serde(rename = "users", skip_serializing_if = "Option::is_none", default)]
+    pub users: Option<GetCorporateSubAccountIdResponsePlanInfoFeaturesUsers>,
+}
+
+/// Sub-account plan details
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponsePlanInfo {
+    /// Credits quota and remaining credits on the sub-account
+    #[serde(rename = "credits", skip_serializing_if = "Option::is_none", default)]
+    pub credits: Option<GetCorporateSubAccountIdResponsePlanInfoCredits>,
+    /// Features available on the sub-account
+    #[serde(rename = "features", skip_serializing_if = "Option::is_none", default)]
+    pub features: Option<GetCorporateSubAccountIdResponsePlanInfoFeatures>,
+    /// type of the plan
+    #[serde(rename = "planType", skip_serializing_if = "Option::is_none", default)]
+    pub plan_type: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCorporateSubAccountIdResponse {
+    /// Sub-account company name
+    #[serde(
+        rename = "companyName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub company_name: Option<String>,
+    /// Email id of the sub-account organization
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
+    pub email: Option<String>,
+    /// List of groups associated with the sub-account
+    #[serde(rename = "groups", skip_serializing_if = "Option::is_none", default)]
+    pub groups: Option<Vec<GetCorporateSubAccountIdResponseGroupsItem>>,
+    /// Name of the sub-account user
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Sub-account plan details
+    #[serde(rename = "planInfo", skip_serializing_if = "Option::is_none", default)]
+    pub plan_info: Option<GetCorporateSubAccountIdResponsePlanInfo>,
+}
+
+/// List of enable/disable applications on the sub-account
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountIdApplicationsToggleRequest {
+    /// Set this field to enable or disable Automation on the
+    /// sub-account
+    #[serde(
+        rename = "automation",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub automation: Option<bool>,
+    /// Set this field to enable or disable Conversations on the
+    /// sub-account
+    #[serde(
+        rename = "conversations",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub conversations: Option<bool>,
+    /// Set this field to enable or disable Sales CRM on the sub-account
+    #[serde(rename = "crm", skip_serializing_if = "Option::is_none", default)]
+    pub crm: Option<bool>,
+    /// Set this field to enable or disable Email Campaigns on the
+    /// sub-account
+    #[serde(
+        rename = "email-campaigns",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub email_campaigns: Option<bool>,
+    /// Set this field to enable or disable Facebook ads on the
+    /// sub-account
+    #[serde(
+        rename = "facebook-ads",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub facebook_ads: Option<bool>,
+    /// Set this field to enable or disable Inbox on the sub-account /
+    /// Not applicable on ENTv2
+    #[serde(rename = "inbox", skip_serializing_if = "Option::is_none", default)]
+    pub inbox: Option<bool>,
+    /// Set this field to enable or disable Landing pages on the
+    /// sub-account
+    #[serde(
+        rename = "landing-pages",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub landing_pages: Option<bool>,
+    /// Set this field to enable or disable Meetings on the sub-account
+    #[serde(rename = "meetings", skip_serializing_if = "Option::is_none", default)]
+    pub meetings: Option<bool>,
+    /// Set this field to enable or disable SMS Marketing on the
+    /// sub-account
+    #[serde(
+        rename = "sms-campaigns",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sms_campaigns: Option<bool>,
+    /// Set this field to enable or disable Transactional Email on the
+    /// sub-account
+    #[serde(
+        rename = "transactional-emails",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub transactional_emails: Option<bool>,
+    /// Set this field to enable or disable Transactional SMS on the
+    /// sub-account
+    #[serde(
+        rename = "transactional-sms",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub transactional_sms: Option<bool>,
+    /// Set this field to enable or disable Web Push on the sub-account
+    #[serde(rename = "web-push", skip_serializing_if = "Option::is_none", default)]
+    pub web_push: Option<bool>,
+    /// Set this field to enable or disable Whatsapp campaigns on the
+    /// sub-account
+    #[serde(rename = "whatsapp", skip_serializing_if = "Option::is_none", default)]
+    pub whatsapp: Option<bool>,
+}
+
+/// Credit details to update
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountIdPlanRequestCredits {
+    /// Number of email credits | Pass the value -1 for unlimited
+    /// emails in ENTv2 only
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
+    pub email: Option<i64>,
+    /// Number of externalFeeds credits, possible values are 0 or 1
+    /// |available in ENTv2 only
+    #[serde(
+        rename = "externalFeeds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub external_feeds: Option<f64>,
+    /// Number of SMS credits | Pass the value -1 for unlimited SMS
+    /// in ENTv2 only
+    #[serde(rename = "sms", skip_serializing_if = "Option::is_none", default)]
+    pub sms: Option<f32>,
+    /// Number of whatsapp credits | Pass the value -1 for unlimited
+    /// whatsapp in ENTv2 only
+    #[serde(rename = "whatsapp", skip_serializing_if = "Option::is_none", default)]
+    pub whatsapp: Option<f32>,
+    /// Number of Push credits, possible value is 0 and -1 |
+    /// available in ENT-v2 only
+    #[serde(
+        rename = "wpSubscribers",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub wp_subscribers: Option<i64>,
+}
+
+/// Features details to update
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountIdPlanRequestFeatures {
+    /// Number of inboxes / Not required on ENTv2
+    #[serde(rename = "inbox", skip_serializing_if = "Option::is_none", default)]
+    pub inbox: Option<i64>,
+    /// Number of landing pages
+    #[serde(
+        rename = "landingPage",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub landing_page: Option<i64>,
+    /// Number of sales and service users | only available in ENT-V2
+    #[serde(
+        rename = "salesUsers",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sales_users: Option<i64>,
+    /// Number of multi-users
+    #[serde(rename = "users", skip_serializing_if = "Option::is_none", default)]
+    pub users: Option<i64>,
+}
+
+/// Details of the plan to be changed
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountIdPlanRequest {
+    /// Credit details to update
+    #[serde(rename = "credits", skip_serializing_if = "Option::is_none", default)]
+    pub credits: Option<PutCorporateSubAccountIdPlanRequestCredits>,
+    /// Features details to update
+    #[serde(rename = "features", skip_serializing_if = "Option::is_none", default)]
+    pub features: Option<PutCorporateSubAccountIdPlanRequestFeatures>,
+}
+
+/// Credit details to update
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountsPlanRequestCredits {
+    /// Number of email credits | Pass the value -1 for unlimited
+    /// emails in ENTv2 only
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
+    pub email: Option<i64>,
+    /// Number of externalFeeds credits, possible values are 0 or 1
+    /// |available in ENTv2 only
+    #[serde(
+        rename = "externalFeeds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub external_feeds: Option<f64>,
+    /// Number of SMS credits | Pass the value -1 for unlimited SMS
+    /// in ENTv2 only
+    #[serde(rename = "sms", skip_serializing_if = "Option::is_none", default)]
+    pub sms: Option<f32>,
+    /// Number of whatsapp credits | Pass the value -1 for unlimited
+    /// whatsapp in ENTv2 only
+    #[serde(rename = "whatsapp", skip_serializing_if = "Option::is_none", default)]
+    pub whatsapp: Option<f32>,
+    /// Number of Push credits, possible value is 0 and -1 |
+    /// available in ENT-v2 only
+    #[serde(
+        rename = "wpSubscribers",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub wp_subscribers: Option<i64>,
+}
+
+/// Features details to update
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountsPlanRequestFeatures {
+    /// Number of landing pages
+    #[serde(
+        rename = "landingPage",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub landing_page: Option<i64>,
+    /// Number of sales and service users | only available in ENT-V2
+    #[serde(
+        rename = "salesUsers",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sales_users: Option<i64>,
+    /// Number of multi-users
+    #[serde(rename = "users", skip_serializing_if = "Option::is_none", default)]
+    pub users: Option<i64>,
+}
+
+/// Details of the plan to be changed
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateSubAccountsPlanRequest {
+    /// Credit details to update
+    #[serde(rename = "credits", skip_serializing_if = "Option::is_none", default)]
+    pub credits: Option<PutCorporateSubAccountsPlanRequestCredits>,
+    /// Features details to update
+    #[serde(rename = "features", skip_serializing_if = "Option::is_none", default)]
+    pub features: Option<PutCorporateSubAccountsPlanRequestFeatures>,
+    /// List of sub-account ids
+    #[serde(
+        rename = "subAccountIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sub_account_ids: Option<Vec<i64>>,
+}
+
 /// Feature name
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum InviteAdminUserRequestPrivilegesItemFeature {
@@ -4357,7 +5371,7 @@ pub struct InviteAdminUserRequest {
     pub all_features_access: bool,
     /// Email address for the organization
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Ids of Group
     #[serde(rename = "groupIds", skip_serializing_if = "Option::is_none", default)]
     pub group_ids: Option<Vec<String>>,
@@ -4370,6 +5384,35 @@ pub struct InviteAdminUserRequest {
 pub struct InviteAdminUserResponse {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PutCorporateUserInvitationActionEmailAction {
+    #[serde(rename = "resend")]
+    Resend,
+    #[serde(rename = "cancel")]
+    Cancel,
+}
+impl Default for PutCorporateUserInvitationActionEmailAction {
+    fn default() -> Self {
+        Self::Resend
+    }
+}
+impl core::fmt::Display for PutCorporateUserInvitationActionEmailAction {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Resend => write!(f, "resend"),
+            Self::Cancel => write!(f, "cancel"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateUserInvitationActionEmailResponse {
+    /// Action success message
+    #[serde(rename = "message", skip_serializing_if = "Option::is_none", default)]
+    pub message: Option<String>,
 }
 
 /// Granular feature permissions given to the user.
@@ -4449,6 +5492,115 @@ pub struct GetCorporateUserPermissionResponse {
     /// Status of the invited user.
     #[serde(rename = "status")]
     pub status: String,
+}
+
+/// feature name
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PutCorporateUserEmailPermissionsRequestPrivilegesItemFeature {
+    #[serde(rename = "user_management")]
+    UserManagement,
+    #[serde(rename = "api")]
+    Api,
+    #[serde(rename = "my_plan")]
+    MyPlan,
+    #[serde(rename = "apps_management")]
+    AppsManagement,
+    #[serde(rename = "analytics")]
+    Analytics,
+    #[serde(rename = "sub_organization_groups")]
+    SubOrganizationGroups,
+    #[serde(rename = "create_sub_organizations")]
+    CreateSubOrganizations,
+    #[serde(rename = "manage_sub_organizations")]
+    ManageSubOrganizations,
+    #[serde(rename = "security")]
+    Security,
+}
+impl Default for PutCorporateUserEmailPermissionsRequestPrivilegesItemFeature {
+    fn default() -> Self {
+        Self::UserManagement
+    }
+}
+impl core::fmt::Display for PutCorporateUserEmailPermissionsRequestPrivilegesItemFeature {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::UserManagement => write!(f, "user_management"),
+            Self::Api => write!(f, "api"),
+            Self::MyPlan => write!(f, "my_plan"),
+            Self::AppsManagement => write!(f, "apps_management"),
+            Self::Analytics => write!(f, "analytics"),
+            Self::SubOrganizationGroups => write!(f, "sub_organization_groups"),
+            Self::CreateSubOrganizations => write!(f, "create_sub_organizations"),
+            Self::ManageSubOrganizations => write!(f, "manage_sub_organizations"),
+            Self::Security => write!(f, "security"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PutCorporateUserEmailPermissionsRequestPrivilegesItemPermissionsItem {
+    #[serde(rename = "all")]
+    All,
+    #[serde(rename = "none")]
+    None,
+    #[serde(rename = "create")]
+    Create,
+    #[serde(rename = "edit_delete")]
+    EditDelete,
+    #[serde(rename = "create_alerts")]
+    CreateAlerts,
+    #[serde(rename = "download_data")]
+    DownloadData,
+    #[serde(rename = "my_looks")]
+    MyLooks,
+    #[serde(rename = "explore_create")]
+    ExploreCreate,
+}
+impl Default for PutCorporateUserEmailPermissionsRequestPrivilegesItemPermissionsItem {
+    fn default() -> Self {
+        Self::All
+    }
+}
+impl core::fmt::Display for PutCorporateUserEmailPermissionsRequestPrivilegesItemPermissionsItem {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::All => write!(f, "all"),
+            Self::None => write!(f, "none"),
+            Self::Create => write!(f, "create"),
+            Self::EditDelete => write!(f, "edit_delete"),
+            Self::CreateAlerts => write!(f, "create_alerts"),
+            Self::DownloadData => write!(f, "download_data"),
+            Self::MyLooks => write!(f, "my_looks"),
+            Self::ExploreCreate => write!(f, "explore_create"),
+        }
+    }
+}
+
+/// Permission on features
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateUserEmailPermissionsRequestPrivilegesItem {
+    /// feature name
+    #[serde(rename = "feature", skip_serializing_if = "Option::is_none", default)]
+    pub feature: Option<PutCorporateUserEmailPermissionsRequestPrivilegesItemFeature>,
+    /// Permission for the feature
+    #[serde(
+        rename = "permissions",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub permissions:
+        Option<Vec<PutCorporateUserEmailPermissionsRequestPrivilegesItemPermissionsItem>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutCorporateUserEmailPermissionsRequest {
+    /// All access to the features
+    #[serde(rename = "all_features_access")]
+    pub all_features_access: bool,
+    #[serde(rename = "privileges")]
+    pub privileges: Vec<PutCorporateUserEmailPermissionsRequestPrivilegesItem>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -5003,7 +6155,7 @@ pub struct GetSendersResponseSendersItem {
     pub active: bool,
     /// From Email associated to the sender
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Id of the sender
     #[serde(rename = "id")]
     pub id: i64,
@@ -5048,7 +6200,7 @@ pub struct CreateSenderRequest {
     /// From email to use for the sender. A verification email will be
     /// sent to this address.
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// **Mandatory in case of dedicated IP**. IPs to associate to the
     /// sender. Not required for standard accounts.
     #[serde(rename = "ips", skip_serializing_if = "Option::is_none", default)]
@@ -5386,7 +6538,7 @@ pub struct UpdateSenderRequestIpsItem {
 pub struct UpdateSenderRequest {
     /// From Email to update the sender
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// **Only in case of dedicated IP**. IPs to associate to the
     /// sender. If passed, will replace all the existing IPs. Not required for standard accounts.
     #[serde(rename = "ips", skip_serializing_if = "Option::is_none", default)]
@@ -6172,7 +7324,7 @@ pub struct UpsertrecordsRequest {
 pub struct UpsertrecordsResponse {
     #[serde(rename = "message", skip_serializing_if = "Option::is_none", default)]
     pub message: Option<String>,
-    /// Unique Id for the batch process used to track the status of the batch. **How to use this processId:**   Refer to the [Get process status API](https://developers.brevo.com/reference/get-process) to check the execution status of this batch using the returned `processId`.
+    /// Unique Id for the batch process used to track the status of the batch. **How to use this processId:**   Refer to the [Get process status API](<https://developers.brevo.com/reference/get-process>) to check the execution status of this batch using the returned `processId`.
     #[serde(rename = "processId", skip_serializing_if = "Option::is_none", default)]
     pub process_id: Option<i64>,
 }
@@ -6393,7 +7545,7 @@ pub struct CreateContactRequest {
     pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// Email address of the user. **Mandatory if "ext_id"  & "SMS" field is not passed.**
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Set this field to blacklist the contact for emails (emailBlacklisted = true)
     #[serde(
         rename = "emailBlacklisted",
@@ -6420,7 +7572,7 @@ pub struct CreateContactRequest {
         skip_serializing_if = "Option::is_none",
         default
     )]
-    pub smtp_blacklist_sender: Option<Vec<String>>,
+    pub smtp_blacklist_sender: Option<Vec<crate::types::Email>>,
     /// Facilitate to update the existing contact in the same request (updateEnabled = true)
     #[serde(
         rename = "updateEnabled",
@@ -6806,7 +7958,7 @@ pub struct UpdateBatchContactsRequestContactsItem {
     pub attributes: Option<serde_json::Value>,
     /// Email address of the user to be updated (For each operation only pass one of the supported contact identifiers. Email, id or sms)
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Set/unset this field to blacklist/allow the contact for emails (emailBlacklisted = true)
     #[serde(
         rename = "emailBlacklisted",
@@ -6839,7 +7991,7 @@ pub struct UpdateBatchContactsRequestContactsItem {
         skip_serializing_if = "Option::is_none",
         default
     )]
-    pub smtp_blacklist_sender: Option<Vec<String>>,
+    pub smtp_blacklist_sender: Option<Vec<crate::types::Email>>,
     /// Ids of the lists to remove the contact from
     #[serde(
         rename = "unlinkListIds",
@@ -6869,7 +8021,7 @@ pub struct CreateDoiContactRequest {
     pub attributes: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// Email address where the confirmation email will be sent. This email address will be the identifier for all other contact attributes.
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Lists under user account where contact should not be added
     #[serde(
         rename = "excludeListIds",
@@ -7076,7 +8228,7 @@ pub struct RequestContactExportRequest {
         default
     )]
     pub export_subscription_status: Option<Vec<String>>,
-    /// Webhook that will be called once the export process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479
+    /// Webhook that will be called once the export process is finished. For reference, <https://help.brevo.com/hc/en-us/articles/360007666479>
     #[serde(rename = "notifyUrl", skip_serializing_if = "Option::is_none", default)]
     pub notify_url: Option<String>,
 }
@@ -7215,7 +8367,7 @@ pub struct ImportContactsRequest {
     /// To create a new list and import the contacts into it, pass the listName and an optional folderId.
     #[serde(rename = "newList", skip_serializing_if = "Option::is_none", default)]
     pub new_list: Option<ImportContactsRequestNewList>,
-    /// URL that will be called once the import process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479
+    /// URL that will be called once the import process is finished. For reference, <https://help.brevo.com/hc/en-us/articles/360007666479>
     #[serde(rename = "notifyUrl", skip_serializing_if = "Option::is_none", default)]
     pub notify_url: Option<String>,
     /// To blacklist all the contacts for sms
@@ -7760,7 +8912,7 @@ pub struct UpdateContactRequest {
         skip_serializing_if = "Option::is_none",
         default
     )]
-    pub smtp_blacklist_sender: Option<Vec<String>>,
+    pub smtp_blacklist_sender: Option<Vec<crate::types::Email>>,
     /// Ids of the lists to remove the contact from
     #[serde(
         rename = "unlinkListIds",
@@ -7972,6 +9124,114 @@ pub struct GetContactStatsResponse {
         default
     )]
     pub unsubscriptions: Option<GetContactStatsResponseUnsubscriptions>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostConversationsAgentOnlinePingRequest {
+    /// Agent's email address. When sending online pings from a standalone system, it's hard to maintain a 1-to-1 relationship between the users of both systems. In this case, an agent can be specified by their email address. If there's no agent with the specified email address in your Brevo organization, a dummy agent will be created automatically.
+    #[serde(
+        rename = "agentEmail",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub agent_email: Option<crate::types::Email>,
+    /// Agent ID. It can be found on the agent's page or received <a href="<https://developers.brevo.com/docs/conversations-webhooks">from> a webhook</a>. Alternatively, you can use `agentEmail` + `agentName` + `receivedFrom` instead (all 3 fields required).
+    #[serde(rename = "agentId", skip_serializing_if = "Option::is_none", default)]
+    pub agent_id: Option<String>,
+    /// Agent's name.
+    #[serde(rename = "agentName", skip_serializing_if = "Option::is_none", default)]
+    pub agent_name: Option<String>,
+    /// Mark your messages to distinguish messages created by you from the others.
+    #[serde(
+        rename = "receivedFrom",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub received_from: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostConversationsMessagesRequest {
+    /// Agent's email address. When sending messages from a standalone system, it's hard to maintain a 1-to-1 relationship between the users of both systems. In this case, an agent can be specified by their email address.
+    #[serde(
+        rename = "agentEmail",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub agent_email: Option<crate::types::Email>,
+    /// Agent ID. It can be found on the agent's page or received <a href="<https://developers.brevo.com/docs/conversations-webhooks">from> a webhook</a>. Alternatively, you can use `agentEmail` + `agentName` + `receivedFrom` instead (all 3 fields required).
+    #[serde(rename = "agentId", skip_serializing_if = "Option::is_none", default)]
+    pub agent_id: Option<String>,
+    /// Agent's name.
+    #[serde(rename = "agentName", skip_serializing_if = "Option::is_none", default)]
+    pub agent_name: Option<String>,
+    /// Mark your messages to distinguish messages created by you from the others.
+    #[serde(
+        rename = "receivedFrom",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub received_from: Option<String>,
+    /// Message text.
+    #[serde(rename = "text")]
+    pub text: String,
+    /// Visitor's ID received <a href="<https://developers.brevo.com/docs/conversations-webhooks">from> a webhook</a> or generated by you to <a href="<https://developers.brevo.com/docs/customize-the-widget#identifying-existing-users">bind> an existing user account to Conversations</a>.
+    #[serde(rename = "visitorId")]
+    pub visitor_id: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutConversationsMessagesIdRequest {
+    /// The new message text.
+    #[serde(rename = "text")]
+    pub text: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostConversationsPushedMessagesRequest {
+    /// Agent ID. It can be found on the agent's page or received <a href="<https://developers.brevo.com/docs/conversations-webhooks">from> a webhook</a>.
+    #[serde(rename = "agentId", skip_serializing_if = "Option::is_none", default)]
+    pub agent_id: Option<String>,
+    /// Group ID. It can be found on the group's page.
+    #[serde(rename = "groupId", skip_serializing_if = "Option::is_none", default)]
+    pub group_id: Option<String>,
+    /// Message text.
+    #[serde(rename = "text")]
+    pub text: String,
+    /// Visitor's ID received <a href="<https://developers.brevo.com/docs/conversations-webhooks">from> a webhook</a> or generated by you to <a href="<https://developers.brevo.com/docs/customize-the-widget#identifying-existing-users">bind> an existing user account to Conversations</a>.
+    #[serde(rename = "visitorId")]
+    pub visitor_id: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutConversationsPushedMessagesIdRequest {
+    /// The new message text.
+    #[serde(rename = "text")]
+    pub text: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutConversationsVisitorGroupRequest {
+    /// Group ID. It can be found on group’s page.
+    #[serde(rename = "groupId")]
+    pub group_id: serde_json::Value,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PutConversationsVisitorGroupResponse {
+    /// group ID the visitor was assigned to
+    #[serde(rename = "groupId", skip_serializing_if = "Option::is_none", default)]
+    pub group_id: Option<serde_json::Value>,
+    /// visitor ID
+    #[serde(rename = "visitorId", skip_serializing_if = "Option::is_none", default)]
+    pub visitor_id: Option<serde_json::Value>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
@@ -8234,6 +9494,136 @@ pub struct CreateCouponsRequest {
     pub collection_id: String,
     #[serde(rename = "coupons")]
     pub coupons: Vec<String>,
+}
+
+/// Attribution list aggregated totals
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetEcommerceAttributionMetricsResponseTotals {
+    #[serde(rename = "averageBasket")]
+    pub average_basket: f32,
+    #[serde(rename = "ordersCount")]
+    pub orders_count: f64,
+    #[serde(rename = "revenue")]
+    pub revenue: f32,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetEcommerceAttributionMetricsResponse {
+    /// List of conversion attribution metrics
+    #[serde(rename = "results")]
+    pub results: Vec<serde_json::Value>,
+    /// Attribution list aggregated totals
+    #[serde(rename = "totals")]
+    pub totals: GetEcommerceAttributionMetricsResponseTotals,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetEcommerceAttributionMetricsConversionSourceConversionSourceIdConversionSource {
+    #[serde(rename = "email_campaign")]
+    EmailCampaign,
+    #[serde(rename = "sms_campaign")]
+    SmsCampaign,
+    #[serde(rename = "automation_workflow_email")]
+    AutomationWorkflowEmail,
+    #[serde(rename = "automation_workflow_sms")]
+    AutomationWorkflowSms,
+}
+impl Default for GetEcommerceAttributionMetricsConversionSourceConversionSourceIdConversionSource {
+    fn default() -> Self {
+        Self::EmailCampaign
+    }
+}
+impl core::fmt::Display
+    for GetEcommerceAttributionMetricsConversionSourceConversionSourceIdConversionSource
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::EmailCampaign => write!(f, "email_campaign"),
+            Self::SmsCampaign => write!(f, "sms_campaign"),
+            Self::AutomationWorkflowEmail => write!(f, "automation_workflow_email"),
+            Self::AutomationWorkflowSms => write!(f, "automation_workflow_sms"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetEcommerceAttributionMetricsConversionSourceConversionSourceIdResponse {
+    #[serde(rename = "newCustomersCount")]
+    pub new_customers_count: f64,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetEcommerceAttributionProductsConversionSourceConversionSourceIdConversionSource {
+    #[serde(rename = "email_campaign")]
+    EmailCampaign,
+    #[serde(rename = "sms_campaign")]
+    SmsCampaign,
+    #[serde(rename = "automation_workflow_email")]
+    AutomationWorkflowEmail,
+    #[serde(rename = "automation_workflow_sms")]
+    AutomationWorkflowSms,
+}
+impl Default for GetEcommerceAttributionProductsConversionSourceConversionSourceIdConversionSource {
+    fn default() -> Self {
+        Self::EmailCampaign
+    }
+}
+impl core::fmt::Display
+    for GetEcommerceAttributionProductsConversionSourceConversionSourceIdConversionSource
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::EmailCampaign => write!(f, "email_campaign"),
+            Self::SmsCampaign => write!(f, "sms_campaign"),
+            Self::AutomationWorkflowEmail => write!(f, "automation_workflow_email"),
+            Self::AutomationWorkflowSms => write!(f, "automation_workflow_sms"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetEcommerceAttributionProductsConversionSourceConversionSourceIdResponseProductsItem {
+    #[serde(rename = "id")]
+    pub id: String,
+    #[serde(rename = "imageUrl", skip_serializing_if = "Option::is_none", default)]
+    pub image_url: Option<String>,
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    #[serde(
+        rename = "ordersCount",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub orders_count: Option<i64>,
+    #[serde(rename = "price", skip_serializing_if = "Option::is_none", default)]
+    pub price: Option<f32>,
+    #[serde(rename = "revenue", skip_serializing_if = "Option::is_none", default)]
+    pub revenue: Option<f32>,
+    #[serde(rename = "sku", skip_serializing_if = "Option::is_none", default)]
+    pub sku: Option<String>,
+    #[serde(rename = "url", skip_serializing_if = "Option::is_none", default)]
+    pub url: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetEcommerceAttributionProductsConversionSourceConversionSourceIdResponse {
+    /// List of attributed products
+    #[serde(rename = "products")]
+    pub products:
+        Vec<GetEcommerceAttributionProductsConversionSourceConversionSourceIdResponseProductsItem>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetEcommerceConfigDisplayCurrencyResponse {
+    /// ISO 4217 compliant display currency code
+    #[serde(rename = "code")]
+    pub code: String,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -8658,7 +10048,7 @@ impl core::fmt::Display for CreateProductAlertType {
 pub struct CreateProductAlertRequestContactIdentifiers {
     /// Email address of the contact
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Contact ID in your system
     #[serde(rename = "ext_id", skip_serializing_if = "Option::is_none", default)]
     pub ext_id: Option<String>,
@@ -8912,10 +10302,10 @@ pub struct GetInboundEmailEventsResponseEventsItem {
     pub date: time::OffsetDateTime,
     /// Recipient’s email address
     #[serde(rename = "recipient")]
-    pub recipient: String,
+    pub recipient: crate::types::Email,
     /// Sender’s email address
     #[serde(rename = "sender")]
-    pub sender: String,
+    pub sender: crate::types::Email,
     /// UUID that can be used to fetch additional data
     #[serde(rename = "uuid")]
     pub uuid: String,
@@ -9024,13 +10414,103 @@ pub struct GetInboundEmailEventsByUuidResponse {
     pub received_at: Option<time::OffsetDateTime>,
     /// Recipient’s email address
     #[serde(rename = "recipient", skip_serializing_if = "Option::is_none", default)]
-    pub recipient: Option<String>,
+    pub recipient: Option<crate::types::Email>,
     /// Sender’s email address
     #[serde(rename = "sender", skip_serializing_if = "Option::is_none", default)]
-    pub sender: Option<String>,
+    pub sender: Option<crate::types::Email>,
     /// Value of the Subject header. This will be present only after the processing is done.
     #[serde(rename = "subject", skip_serializing_if = "Option::is_none", default)]
     pub subject: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyBalanceProgramsPidActiveBalanceSortField {
+    #[serde(rename = "createdAt")]
+    CreatedAt,
+}
+impl Default for GetLoyaltyBalanceProgramsPidActiveBalanceSortField {
+    fn default() -> Self {
+        Self::CreatedAt
+    }
+}
+impl core::fmt::Display for GetLoyaltyBalanceProgramsPidActiveBalanceSortField {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::CreatedAt => write!(f, "createdAt"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyBalanceProgramsPidActiveBalanceSort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetLoyaltyBalanceProgramsPidActiveBalanceSort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetLoyaltyBalanceProgramsPidActiveBalanceSort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyBalanceProgramsPidActiveBalanceResponseActiveBalancesItem {
+    /// Unique identifier of the balance entry.
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Current balance amount.
+    #[serde(rename = "amount", skip_serializing_if = "Option::is_none", default)]
+    pub amount: Option<f32>,
+    /// Timestamp when the balance was created.
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<time::OffsetDateTime>,
+    /// Timestamp when the balance expires (if applicable).
+    #[serde(rename = "expiresAt", skip_serializing_if = "Option::is_none", default)]
+    pub expires_at: Option<time::OffsetDateTime>,
+}
+
+/// Active balance response for a specific contact and balance definition.
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyBalanceProgramsPidActiveBalanceResponse {
+    /// Total number of active balances.
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none", default)]
+    pub count: Option<i64>,
+    /// Unique identifier of the loyalty program.
+    #[serde(
+        rename = "loyaltyProgramId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_program_id: Option<String>,
+    /// Unique identifier of the contact.
+    #[serde(rename = "contactId", skip_serializing_if = "Option::is_none", default)]
+    pub contact_id: Option<i64>,
+    /// Unique identifier of the balance definition.
+    #[serde(
+        rename = "balanceDefinitionId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_definition_id: Option<String>,
+    /// List of active balances.
+    #[serde(
+        rename = "activeBalances",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub active_balances:
+        Option<Vec<GetLoyaltyBalanceProgramsPidActiveBalanceResponseActiveBalancesItem>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
@@ -9105,6 +10585,317 @@ pub struct GetBalanceDefinitionListResponse {
     /// list of balance definitions
     #[serde(rename = "items", skip_serializing_if = "Option::is_none", default)]
     pub items: Option<Vec<serde_json::Value>>,
+}
+
+/// Defines when the balance expires within the selected duration.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationModifier {
+    #[serde(rename = "noModification")]
+    NoModification,
+    #[serde(rename = "startOfPeriod")]
+    StartOfPeriod,
+    #[serde(rename = "endOfPeriod")]
+    EndOfPeriod,
+}
+impl Default
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationModifier
+{
+    fn default() -> Self {
+        Self::NoModification
+    }
+}
+impl core::fmt::Display
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationModifier
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::NoModification => write!(f, "noModification"),
+            Self::StartOfPeriod => write!(f, "startOfPeriod"),
+            Self::EndOfPeriod => write!(f, "endOfPeriod"),
+        }
+    }
+}
+
+/// Unit of time for balance validity.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationUnit {
+    #[serde(rename = "day")]
+    Day,
+    #[serde(rename = "week")]
+    Week,
+    #[serde(rename = "month")]
+    Month,
+    #[serde(rename = "year")]
+    Year,
+}
+impl Default
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationUnit
+{
+    fn default() -> Self {
+        Self::Day
+    }
+}
+impl core::fmt::Display
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationUnit
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Day => write!(f, "day"),
+            Self::Week => write!(f, "week"),
+            Self::Month => write!(f, "month"),
+            Self::Year => write!(f, "year"),
+        }
+    }
+}
+
+/// Defines whether partial credit is allowed when reaching max balance.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionAmountOvertakingStrategy
+{
+    #[serde(rename = "strict")]
+    Strict,
+    #[serde(rename = "partial")]
+    Partial,
+}
+impl Default
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionAmountOvertakingStrategy
+{
+    fn default() -> Self {
+        Self::Strict
+    }
+}
+impl core::fmt::Display
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionAmountOvertakingStrategy
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Strict => write!(f, "strict"),
+            Self::Partial => write!(f, "partial"),
+        }
+    }
+}
+
+/// Defines rounding strategy for credit transactions.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionCreditRounding {
+    #[serde(rename = "lower")]
+    Lower,
+    #[serde(rename = "upper")]
+    Upper,
+    #[serde(rename = "natural")]
+    Natural,
+}
+impl Default for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionCreditRounding {
+    fn default() -> Self {
+        Self::Lower
+    }
+}
+impl core::fmt::Display
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionCreditRounding
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Lower => write!(f, "lower"),
+            Self::Upper => write!(f, "upper"),
+            Self::Natural => write!(f, "natural"),
+        }
+    }
+}
+
+/// Defines rounding strategy for debit transactions.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionDebitRounding {
+    #[serde(rename = "lower")]
+    Lower,
+    #[serde(rename = "upper")]
+    Upper,
+    #[serde(rename = "natural")]
+    Natural,
+}
+impl Default for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionDebitRounding {
+    fn default() -> Self {
+        Self::Lower
+    }
+}
+impl core::fmt::Display
+    for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionDebitRounding
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Lower => write!(f, "lower"),
+            Self::Upper => write!(f, "upper"),
+            Self::Natural => write!(f, "natural"),
+        }
+    }
+}
+
+/// Unit of balance measurement.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestUnit {
+    #[serde(rename = "POINTS")]
+    POINTS,
+    #[serde(rename = "EUR")]
+    EUR,
+    #[serde(rename = "USD")]
+    USD,
+    #[serde(rename = "MXN")]
+    MXN,
+    #[serde(rename = "GBP")]
+    GBP,
+    #[serde(rename = "INR")]
+    INR,
+    #[serde(rename = "CAD")]
+    CAD,
+    #[serde(rename = "SGD")]
+    SGD,
+    #[serde(rename = "RON")]
+    RON,
+    #[serde(rename = "JPY")]
+    JPY,
+    #[serde(rename = "MYR")]
+    MYR,
+    #[serde(rename = "CLP")]
+    CLP,
+    #[serde(rename = "PEN")]
+    PEN,
+    #[serde(rename = "MAD")]
+    MAD,
+    #[serde(rename = "AUD")]
+    AUD,
+    #[serde(rename = "CHF")]
+    CHF,
+    #[serde(rename = "BRL")]
+    BRL,
+}
+impl Default for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestUnit {
+    fn default() -> Self {
+        Self::POINTS
+    }
+}
+impl core::fmt::Display for PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestUnit {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::POINTS => write!(f, "POINTS"),
+            Self::EUR => write!(f, "EUR"),
+            Self::USD => write!(f, "USD"),
+            Self::MXN => write!(f, "MXN"),
+            Self::GBP => write!(f, "GBP"),
+            Self::INR => write!(f, "INR"),
+            Self::CAD => write!(f, "CAD"),
+            Self::SGD => write!(f, "SGD"),
+            Self::RON => write!(f, "RON"),
+            Self::JPY => write!(f, "JPY"),
+            Self::MYR => write!(f, "MYR"),
+            Self::CLP => write!(f, "CLP"),
+            Self::PEN => write!(f, "PEN"),
+            Self::MAD => write!(f, "MAD"),
+            Self::AUD => write!(f, "AUD"),
+            Self::CHF => write!(f, "CHF"),
+            Self::BRL => write!(f, "BRL"),
+        }
+    }
+}
+
+/// Payload for creating a new balance definition, specifying expiration rules, rounding strategies, and constraints.
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequest {
+    /// Defines when the balance expires within the selected duration.
+    #[serde(
+        rename = "balanceAvailabilityDurationModifier",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_availability_duration_modifier: Option<
+        PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationModifier,
+    >,
+    /// Unit of time for balance validity.
+    #[serde(
+        rename = "balanceAvailabilityDurationUnit",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_availability_duration_unit: Option<
+        PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceAvailabilityDurationUnit,
+    >,
+    /// Number of time units before the balance expires.
+    #[serde(
+        rename = "balanceAvailabilityDurationValue",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_availability_duration_value: Option<i64>,
+    /// Fixed expiration date (`dd/mm` format) as an alternative to duration-based expiry.
+    #[serde(
+        rename = "balanceExpirationDate",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_expiration_date: Option<time::Date>,
+    /// Defines whether partial credit is allowed when reaching max balance.
+    #[serde(
+        rename = "balanceOptionAmountOvertakingStrategy",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_option_amount_overtaking_strategy: Option<
+        PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionAmountOvertakingStrategy,
+    >,
+    /// Defines rounding strategy for credit transactions.
+    #[serde(
+        rename = "balanceOptionCreditRounding",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_option_credit_rounding:
+        Option<PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionCreditRounding>,
+    /// Defines rounding strategy for debit transactions.
+    #[serde(
+        rename = "balanceOptionDebitRounding",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_option_debit_rounding:
+        Option<PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestBalanceOptionDebitRounding>,
+    /// Short description of the balance definition.
+    #[serde(
+        rename = "description",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub description: Option<String>,
+    /// URL of an optional image reference.
+    #[serde(rename = "imageRef", skip_serializing_if = "Option::is_none", default)]
+    pub image_ref: Option<String>,
+    /// Maximum allowable balance amount.
+    #[serde(rename = "maxAmount", skip_serializing_if = "Option::is_none", default)]
+    pub max_amount: Option<f64>,
+    /// Maximum credit allowed per operation.
+    #[serde(
+        rename = "maxCreditAmountLimit",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub max_credit_amount_limit: Option<f64>,
+    /// Maximum debit allowed per operation.
+    #[serde(
+        rename = "maxDebitAmountLimit",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub max_debit_amount_limit: Option<f64>,
+    /// Additional metadata for the balance definition.
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none", default)]
+    pub meta: Option<std::collections::HashMap<String, serde_json::Value>>,
+    /// Minimum allowable balance amount.
+    #[serde(rename = "minAmount", skip_serializing_if = "Option::is_none", default)]
+    pub min_amount: Option<f64>,
+    /// Name of the balance definition.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// Unit of balance measurement.
+    #[serde(rename = "unit")]
+    pub unit: PostLoyaltyBalanceProgramsPidBalanceDefinitionsRequestUnit,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
@@ -9856,6 +11647,279 @@ pub struct GetSubscriptionBalancesResponse {
     pub balance: Option<Vec<GetSubscriptionBalancesResponseBalanceItem>>,
 }
 
+/// Payload for creating a new balance linked to a specific balance definition.
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostLoyaltyBalanceProgramsPidSubscriptionsCidBalancesRequest {
+    /// Unique identifier (UUID) of the balance definition associated with the new balance.
+    #[serde(rename = "balanceDefinitionId")]
+    pub balance_definition_id: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostLoyaltyBalanceProgramsPidSubscriptionsCidBalancesResponse {
+    /// Unique identifier for the balance.
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// The current amount available in the balance.
+    #[serde(rename = "amount", skip_serializing_if = "Option::is_none", default)]
+    pub amount: Option<f32>,
+    /// Loyalty program ID.
+    #[serde(
+        rename = "loyaltyProgramId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_program_id: Option<String>,
+    /// Organization ID.
+    #[serde(
+        rename = "organizationId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub organization_id: Option<i64>,
+    /// Contact ID.
+    #[serde(rename = "contactId", skip_serializing_if = "Option::is_none", default)]
+    pub contact_id: Option<i64>,
+    /// Balance definition ID.
+    #[serde(
+        rename = "balanceDefinitionId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_definition_id: Option<String>,
+    /// Timestamp of when the balance was created.
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<time::OffsetDateTime>,
+    /// Expiration timestamp of the balance.
+    #[serde(rename = "expiresAt", skip_serializing_if = "Option::is_none", default)]
+    pub expires_at: Option<time::OffsetDateTime>,
+    /// Timestamp of when the balance was last consumed.
+    #[serde(
+        rename = "consumedAt",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub consumed_at: Option<time::OffsetDateTime>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyBalanceProgramsPidTransactionHistorySortField {
+    #[serde(rename = "createdAt")]
+    CreatedAt,
+}
+impl Default for GetLoyaltyBalanceProgramsPidTransactionHistorySortField {
+    fn default() -> Self {
+        Self::CreatedAt
+    }
+}
+impl core::fmt::Display for GetLoyaltyBalanceProgramsPidTransactionHistorySortField {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::CreatedAt => write!(f, "createdAt"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyBalanceProgramsPidTransactionHistorySort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetLoyaltyBalanceProgramsPidTransactionHistorySort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetLoyaltyBalanceProgramsPidTransactionHistorySort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyBalanceProgramsPidTransactionHistoryStatus {
+    #[serde(rename = "draft")]
+    Draft,
+    #[serde(rename = "completed")]
+    Completed,
+    #[serde(rename = "rejected")]
+    Rejected,
+    #[serde(rename = "cancelled")]
+    Cancelled,
+    #[serde(rename = "expired")]
+    Expired,
+}
+impl Default for GetLoyaltyBalanceProgramsPidTransactionHistoryStatus {
+    fn default() -> Self {
+        Self::Draft
+    }
+}
+impl core::fmt::Display for GetLoyaltyBalanceProgramsPidTransactionHistoryStatus {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Draft => write!(f, "draft"),
+            Self::Completed => write!(f, "completed"),
+            Self::Rejected => write!(f, "rejected"),
+            Self::Cancelled => write!(f, "cancelled"),
+            Self::Expired => write!(f, "expired"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyBalanceProgramsPidTransactionHistoryTransactionType {
+    #[serde(rename = "credit")]
+    Credit,
+    #[serde(rename = "debit")]
+    Debit,
+}
+impl Default for GetLoyaltyBalanceProgramsPidTransactionHistoryTransactionType {
+    fn default() -> Self {
+        Self::Credit
+    }
+}
+impl core::fmt::Display for GetLoyaltyBalanceProgramsPidTransactionHistoryTransactionType {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Credit => write!(f, "credit"),
+            Self::Debit => write!(f, "debit"),
+        }
+    }
+}
+
+/// The type of the transaction.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyBalanceProgramsPidTransactionHistoryResponseTransactionHistoryItemTransactionType
+{
+    #[serde(rename = "credit")]
+    Credit,
+    #[serde(rename = "debit")]
+    Debit,
+}
+impl Default
+    for GetLoyaltyBalanceProgramsPidTransactionHistoryResponseTransactionHistoryItemTransactionType
+{
+    fn default() -> Self {
+        Self::Credit
+    }
+}
+impl core::fmt::Display
+    for GetLoyaltyBalanceProgramsPidTransactionHistoryResponseTransactionHistoryItemTransactionType
+{
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Credit => write!(f, "credit"),
+            Self::Debit => write!(f, "debit"),
+        }
+    }
+}
+
+/// Represents a record of a past transaction, including status and key timestamps.
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyBalanceProgramsPidTransactionHistoryResponseTransactionHistoryItem {
+    /// The transaction amount.
+    #[serde(rename = "amount", skip_serializing_if = "Option::is_none", default)]
+    pub amount: Option<f32>,
+    /// The type of the transaction.
+    #[serde(
+        rename = "transactionType",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub transaction_type: Option<
+        GetLoyaltyBalanceProgramsPidTransactionHistoryResponseTransactionHistoryItemTransactionType,
+    >,
+    /// Expiration date of the balance associated with this transaction.
+    #[serde(
+        rename = "balanceExpirationDate",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_expiration_date: Option<String>,
+    /// Timestamp when the transaction was canceled, if applicable.
+    #[serde(
+        rename = "cancelledAt",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub cancelled_at: Option<String>,
+    /// Timestamp when the transaction was successfully completed.
+    #[serde(
+        rename = "completedAt",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub completed_at: Option<String>,
+    /// Timestamp when the transaction was initiated.
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<String>,
+    /// Unique identifier of the transaction.
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Optional metadata associated with the transaction.
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none", default)]
+    pub meta: Option<std::collections::HashMap<String, serde_json::Value>>,
+    /// Reason for rejection, if the transaction was declined.
+    #[serde(
+        rename = "rejectReason",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub reject_reason: Option<String>,
+    /// Timestamp when the transaction was rejected.
+    #[serde(
+        rename = "rejectedAt",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub rejected_at: Option<String>,
+    /// Current status of the transaction (e.g., pending, completed, rejected).
+    #[serde(rename = "status", skip_serializing_if = "Option::is_none", default)]
+    pub status: Option<String>,
+}
+
+/// Response containing transaction history details for a specific balance and contact.
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyBalanceProgramsPidTransactionHistoryResponse {
+    /// Unique identifier of the associated balance definition.
+    #[serde(
+        rename = "balanceDefinitionId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_definition_id: Option<String>,
+    /// Unique identifier of the contact related to the transactions.
+    #[serde(rename = "contactId", skip_serializing_if = "Option::is_none", default)]
+    pub contact_id: Option<i64>,
+    /// Total number of transactions in the history.
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none", default)]
+    pub count: Option<i64>,
+    /// Unique identifier of the associated loyalty program.
+    #[serde(
+        rename = "loyaltyProgramId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_program_id: Option<String>,
+    /// List of past transactions associated with the balance.
+    #[serde(
+        rename = "transactionHistory",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub transaction_history:
+        Option<Vec<GetLoyaltyBalanceProgramsPidTransactionHistoryResponseTransactionHistoryItem>>,
+}
+
 /// Explicit transaction type. If not provided, the type is inferred from the sign of the amount (positive = credit, negative = debit).
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum BeginTransactionRequestTransactionType {
@@ -10443,6 +12507,82 @@ pub struct GetCodeCountResponse {
     pub count: Option<i64>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyOfferProgramsPidOffersVersion {
+    #[serde(rename = "active")]
+    Active,
+    #[serde(rename = "draft")]
+    Draft,
+}
+impl Default for GetLoyaltyOfferProgramsPidOffersVersion {
+    fn default() -> Self {
+        Self::Active
+    }
+}
+impl core::fmt::Display for GetLoyaltyOfferProgramsPidOffersVersion {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Active => write!(f, "active"),
+            Self::Draft => write!(f, "draft"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidOffersResponseItemsItem {
+    /// Timestamp for when this reward was created
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<time::OffsetDateTime>,
+    /// Timestamp for when this reward attribution ended
+    #[serde(rename = "endDate", skip_serializing_if = "Option::is_none", default)]
+    pub end_date: Option<time::OffsetDateTime>,
+    /// Unique identifier for the reward
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Loyalty Program to which current reward is associated
+    #[serde(
+        rename = "loyaltyProgramId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_program_id: Option<String>,
+    /// Name of the reward
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Public image of the reward
+    #[serde(
+        rename = "publicImage",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub public_image: Option<String>,
+    /// Timestamp for when this reward attribution started
+    #[serde(rename = "startDate", skip_serializing_if = "Option::is_none", default)]
+    pub start_date: Option<time::OffsetDateTime>,
+    /// State of the reward
+    #[serde(rename = "state", skip_serializing_if = "Option::is_none", default)]
+    pub state: Option<String>,
+    /// Timestamp for when this reward attribution was updated
+    #[serde(rename = "updatedAt", skip_serializing_if = "Option::is_none", default)]
+    pub updated_at: Option<time::OffsetDateTime>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidOffersResponse {
+    /// Items for the current reward
+    #[serde(rename = "items", skip_serializing_if = "Option::is_none", default)]
+    pub items: Option<Vec<GetLoyaltyOfferProgramsPidOffersResponseItemsItem>>,
+    /// Count of the associated parameter in current reward
+    #[serde(
+        rename = "totalCount",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub total_count: Option<i64>,
+}
+
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CreateRewardRequest {
@@ -10703,7 +12843,7 @@ pub struct RedeemVoucherRequestOrder {
     pub created_at: Option<time::OffsetDateTime>,
     /// Email address associated with the order
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Unique identifier for the order
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<String>,
@@ -10813,6 +12953,601 @@ pub struct ValidateRewardResponse {
     /// Boolean value to authorize a reward or not
     #[serde(rename = "authorize", skip_serializing_if = "Option::is_none", default)]
     pub authorize: Option<bool>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyOfferProgramsPidRewardsRidVersion {
+    #[serde(rename = "active")]
+    Active,
+    #[serde(rename = "draft")]
+    Draft,
+}
+impl Default for GetLoyaltyOfferProgramsPidRewardsRidVersion {
+    fn default() -> Self {
+        Self::Active
+    }
+}
+impl core::fmt::Display for GetLoyaltyOfferProgramsPidRewardsRidVersion {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Active => write!(f, "active"),
+            Self::Draft => write!(f, "draft"),
+        }
+    }
+}
+
+/// Select startOfPeriod to configure rewards expiry on start of day/week/month/year. Select endOfPeriod to configure reward expiry on end of day/week/month/year, else select noModification
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyOfferProgramsPidRewardsRidResponseExpirationModifier {
+    #[serde(rename = "startOfPeriod")]
+    StartOfPeriod,
+    #[serde(rename = "endOfPeriod")]
+    EndOfPeriod,
+    #[serde(rename = "noModification")]
+    NoModification,
+}
+impl Default for GetLoyaltyOfferProgramsPidRewardsRidResponseExpirationModifier {
+    fn default() -> Self {
+        Self::StartOfPeriod
+    }
+}
+impl core::fmt::Display for GetLoyaltyOfferProgramsPidRewardsRidResponseExpirationModifier {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::StartOfPeriod => write!(f, "startOfPeriod"),
+            Self::EndOfPeriod => write!(f, "endOfPeriod"),
+            Self::NoModification => write!(f, "noModification"),
+        }
+    }
+}
+
+/// object
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseGenerator {
+    /// Timestamp when the reward was created
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<String>,
+    /// Public facing description of the reward
+    #[serde(
+        rename = "description",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub description: Option<String>,
+    /// Unique identifier for the reward
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Name of the reward
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Generated pattern
+    #[serde(rename = "pattern", skip_serializing_if = "Option::is_none", default)]
+    pub pattern: Option<String>,
+    /// Timestamp when the reward was created
+    #[serde(rename = "updatedAt", skip_serializing_if = "Option::is_none", default)]
+    pub updated_at: Option<time::OffsetDateTime>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseLimitsItem {
+    /// Timestamp when the reward limit was created
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<time::OffsetDateTime>,
+    /// Unit of time for the reward limit's availability (e.g., day/week/month/year).
+    #[serde(
+        rename = "durationUnit",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub duration_unit: Option<String>,
+    /// Number of days/weeks/month/year for reward limit
+    #[serde(
+        rename = "durationValue",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub duration_value: Option<i64>,
+    /// Value of the limit
+    #[serde(
+        rename = "limitValue",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub limit_value: Option<i64>,
+    /// Unique identifier for the reward limit
+    #[serde(
+        rename = "rewardLimitId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub reward_limit_id: Option<String>,
+    /// Select true to calculate all redeems/attributions from the previous value of selected durationUnit to the current time
+    #[serde(
+        rename = "slidingSchedule",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub sliding_schedule: Option<bool>,
+    /// Type of reward
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none", default)]
+    pub type_: Option<String>,
+    /// Timestamp when the reward limit was created
+    #[serde(rename = "updatedAt", skip_serializing_if = "Option::is_none", default)]
+    pub updated_at: Option<time::OffsetDateTime>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseProductsItem {
+    /// Timestamp when the product was created
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<String>,
+    /// URL of the product image
+    #[serde(rename = "imageRef", skip_serializing_if = "Option::is_none", default)]
+    pub image_ref: Option<String>,
+    /// Unique identifier for the product
+    #[serde(rename = "productId", skip_serializing_if = "Option::is_none", default)]
+    pub product_id: Option<String>,
+    /// string
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none", default)]
+    pub value: Option<String>,
+}
+
+/// object
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseRewardConfigs {
+    /// Attribution config of the reward
+    #[serde(
+        rename = "attribution",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attribution: Option<String>,
+    /// Code config of the reward
+    #[serde(rename = "code", skip_serializing_if = "Option::is_none", default)]
+    pub code: Option<String>,
+    /// Value config of the reward
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none", default)]
+    pub value: Option<String>,
+}
+
+/// Selected event in the rule
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseRuleEvent {
+    /// Name of the event
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Source of the event
+    #[serde(rename = "source", skip_serializing_if = "Option::is_none", default)]
+    pub source: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseRuleResultsItemParametersItem {
+    /// Name of the rule
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Selected value of the parameter to define the rule
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none", default)]
+    pub value: Option<serde_json::Value>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseRuleResultsItem {
+    /// Action for the defined rule
+    #[serde(rename = "action", skip_serializing_if = "Option::is_none", default)]
+    pub action: Option<String>,
+    /// Parameters to define the reward
+    #[serde(
+        rename = "parameters",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub parameters:
+        Option<Vec<GetLoyaltyOfferProgramsPidRewardsRidResponseRuleResultsItemParametersItem>>,
+    /// Selected service to define the reward
+    #[serde(rename = "service", skip_serializing_if = "Option::is_none", default)]
+    pub service: Option<String>,
+}
+
+/// Rule to define the reward
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponseRule {
+    /// Selected rule condition
+    #[serde(rename = "condition", skip_serializing_if = "Option::is_none", default)]
+    pub condition: Option<serde_json::Value>,
+    /// Timestamp when the rule was created
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<String>,
+    /// Description of the rule
+    #[serde(
+        rename = "description",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub description: Option<String>,
+    /// Selected event in the rule
+    #[serde(rename = "event", skip_serializing_if = "Option::is_none", default)]
+    pub event: Option<GetLoyaltyOfferProgramsPidRewardsRidResponseRuleEvent>,
+    /// Metric to identify if it's an internal rule or not
+    #[serde(
+        rename = "isInternal",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub is_internal: Option<bool>,
+    /// Loyalty Program id to which current rule is associated
+    #[serde(
+        rename = "loyaltyProgramId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_program_id: Option<String>,
+    /// Loyalty Version id to which current rule is associated
+    #[serde(
+        rename = "loyaltyVersionId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_version_id: Option<i64>,
+    /// Additional data to define the rule
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none", default)]
+    pub meta: Option<std::collections::HashMap<String, serde_json::Value>>,
+    /// Rule name
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Results of the rule definition
+    #[serde(rename = "results", skip_serializing_if = "Option::is_none", default)]
+    pub results: Option<Vec<GetLoyaltyOfferProgramsPidRewardsRidResponseRuleResultsItem>>,
+    /// Unique identifier for the rule
+    #[serde(rename = "ruleId", skip_serializing_if = "Option::is_none", default)]
+    pub rule_id: Option<String>,
+    /// Type of the rule
+    #[serde(rename = "ruleType", skip_serializing_if = "Option::is_none", default)]
+    pub rule_type: Option<String>,
+    /// Timestamp when the rule was updated
+    #[serde(rename = "updatedAt", skip_serializing_if = "Option::is_none", default)]
+    pub updated_at: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidRewardsRidResponse {
+    /// Maximum number of times a consumer can be attributed this reward
+    #[serde(
+        rename = "attributionPerConsumer",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attribution_per_consumer: Option<i64>,
+    /// Unique identifier for the balance definition
+    #[serde(
+        rename = "balanceDefinitionId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub balance_definition_id: Option<String>,
+    /// Unique code for the reward
+    #[serde(rename = "code", skip_serializing_if = "Option::is_none", default)]
+    pub code: Option<String>,
+    /// Total number of codes generated
+    #[serde(rename = "codeCount", skip_serializing_if = "Option::is_none", default)]
+    pub code_count: Option<i64>,
+    /// Unique identifier for the code generator
+    #[serde(
+        rename = "codeGeneratorId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub code_generator_id: Option<String>,
+    /// Unique identifier for the code pool
+    #[serde(
+        rename = "codePoolId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub code_pool_id: Option<String>,
+    /// Configuration settings for the reward
+    #[serde(rename = "config", skip_serializing_if = "Option::is_none", default)]
+    pub config: Option<String>,
+    /// Timestamp when the reward was created
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<time::OffsetDateTime>,
+    /// Disabled date of the reward
+    #[serde(
+        rename = "disabledAt",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub disabled_at: Option<time::OffsetDateTime>,
+    /// End date of the reward validity
+    #[serde(rename = "endDate", skip_serializing_if = "Option::is_none", default)]
+    pub end_date: Option<time::OffsetDateTime>,
+    /// Expiration date of the reward
+    #[serde(
+        rename = "expirationDate",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub expiration_date: Option<time::OffsetDateTime>,
+    /// Select startOfPeriod to configure rewards expiry on start of day/week/month/year. Select endOfPeriod to configure reward expiry on end of day/week/month/year, else select noModification
+    #[serde(
+        rename = "expirationModifier",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub expiration_modifier: Option<GetLoyaltyOfferProgramsPidRewardsRidResponseExpirationModifier>,
+    /// Unit of time for the rewards's availability (e.g., day/week/month/year).
+    #[serde(
+        rename = "expirationUnit",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub expiration_unit: Option<String>,
+    /// Number of days/weeks/month/year for reward expiry
+    #[serde(
+        rename = "expirationValue",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub expiration_value: Option<i64>,
+    /// object
+    #[serde(rename = "generator", skip_serializing_if = "Option::is_none", default)]
+    pub generator: Option<GetLoyaltyOfferProgramsPidRewardsRidResponseGenerator>,
+    /// Unique identifier for the reward
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Attribution / Redeem Limits for the reward
+    #[serde(rename = "limits", skip_serializing_if = "Option::is_none", default)]
+    pub limits: Option<Vec<GetLoyaltyOfferProgramsPidRewardsRidResponseLimitsItem>>,
+    /// Id of the loyalty program to which the current reward belongs to
+    #[serde(
+        rename = "loyaltyProgramId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_program_id: Option<String>,
+    /// Additional data for reward definition
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none", default)]
+    pub meta: Option<serde_json::Value>,
+    /// Name of the reward
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Selected products for reward definition
+    #[serde(rename = "products", skip_serializing_if = "Option::is_none", default)]
+    pub products: Option<Vec<GetLoyaltyOfferProgramsPidRewardsRidResponseProductsItem>>,
+    /// Public description for the reward
+    #[serde(
+        rename = "publicDescription",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub public_description: Option<String>,
+    /// Public Image for the reward
+    #[serde(
+        rename = "publicImage",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub public_image: Option<String>,
+    /// Public name for the reward
+    #[serde(
+        rename = "publicName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub public_name: Option<String>,
+    /// Defines the redeem limit for the consumer
+    #[serde(
+        rename = "redeemPerConsumer",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub redeem_per_consumer: Option<i64>,
+    /// Rules defined to redeem a reward
+    #[serde(
+        rename = "redeemRules",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub redeem_rules: Option<Vec<String>>,
+    /// object
+    #[serde(
+        rename = "rewardConfigs",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub reward_configs: Option<GetLoyaltyOfferProgramsPidRewardsRidResponseRewardConfigs>,
+    /// Rule to define the reward
+    #[serde(rename = "rule", skip_serializing_if = "Option::is_none", default)]
+    pub rule: Option<GetLoyaltyOfferProgramsPidRewardsRidResponseRule>,
+    /// Start date of attribution of the reward
+    #[serde(rename = "startDate", skip_serializing_if = "Option::is_none", default)]
+    pub start_date: Option<time::OffsetDateTime>,
+    /// Id of the selected balance while redeeming / attributing a reward
+    #[serde(
+        rename = "subtractBalanceDefinitionId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub subtract_balance_definition_id: Option<String>,
+    /// Strategy of the Balance while redeeming / attributing a reward
+    #[serde(
+        rename = "subtractBalanceStrategy",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub subtract_balance_strategy: Option<String>,
+    /// Amount of balance to be selected while redeeming / attributing a reward
+    #[serde(
+        rename = "subtractBalanceValue",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub subtract_balance_value: Option<i64>,
+    /// Value to indicate to subtract full balance or not
+    #[serde(
+        rename = "subtractTotalBalance",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub subtract_total_balance: Option<bool>,
+    /// Defines the limit to which a consumer can attribute a reward
+    #[serde(
+        rename = "totalAttribution",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub total_attribution: Option<i64>,
+    /// Defines the limit to which a consumer can redeem a reward
+    #[serde(
+        rename = "totalRedeem",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub total_redeem: Option<i64>,
+    /// Id of the Rule to be updated for that reward
+    #[serde(rename = "triggerId", skip_serializing_if = "Option::is_none", default)]
+    pub trigger_id: Option<String>,
+    /// Selected unit of the balance
+    #[serde(rename = "unit", skip_serializing_if = "Option::is_none", default)]
+    pub unit: Option<String>,
+    /// Timestamp for when this reward was last updated.
+    #[serde(rename = "updatedAt", skip_serializing_if = "Option::is_none", default)]
+    pub updated_at: Option<String>,
+    /// Value of metric in selected config for reward definition
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none", default)]
+    pub value: Option<f64>,
+    /// Type of config selected for reward definition
+    #[serde(rename = "valueType", skip_serializing_if = "Option::is_none", default)]
+    pub value_type: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyOfferProgramsPidVouchersSort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetLoyaltyOfferProgramsPidVouchersSort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetLoyaltyOfferProgramsPidVouchersSort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetLoyaltyOfferProgramsPidVouchersSortField {
+    #[serde(rename = "updatedAt")]
+    UpdatedAt,
+    #[serde(rename = "createdAt")]
+    CreatedAt,
+}
+impl Default for GetLoyaltyOfferProgramsPidVouchersSortField {
+    fn default() -> Self {
+        Self::UpdatedAt
+    }
+}
+impl core::fmt::Display for GetLoyaltyOfferProgramsPidVouchersSortField {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::UpdatedAt => write!(f, "updatedAt"),
+            Self::CreatedAt => write!(f, "createdAt"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidVouchersResponseContactRewardsItem {
+    /// Generated code
+    #[serde(rename = "code", skip_serializing_if = "Option::is_none", default)]
+    pub code: Option<String>,
+    /// Timestamp when the reward limit was consumed
+    #[serde(
+        rename = "consumedAt",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub consumed_at: Option<String>,
+    /// Timestamp when the reward limit was created
+    #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none", default)]
+    pub created_at: Option<String>,
+    /// Reward expiration date
+    #[serde(
+        rename = "expirationDate",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub expiration_date: Option<String>,
+    /// Unique identifier for the contact
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Additional data for the reward
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none", default)]
+    pub meta: Option<serde_json::Value>,
+    /// Unique identifier for the reward
+    #[serde(rename = "rewardId", skip_serializing_if = "Option::is_none", default)]
+    pub reward_id: Option<String>,
+    /// Unit of the balance selected in the reward definition
+    #[serde(rename = "unit", skip_serializing_if = "Option::is_none", default)]
+    pub unit: Option<String>,
+    /// Timestamp when the reward limit was updated
+    #[serde(rename = "updatedAt", skip_serializing_if = "Option::is_none", default)]
+    pub updated_at: Option<String>,
+    /// Value of the selected reward config
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none", default)]
+    pub value: Option<f64>,
+    /// Date from which the voucher becomes valid
+    #[serde(rename = "validFrom", skip_serializing_if = "Option::is_none", default)]
+    pub valid_from: Option<time::OffsetDateTime>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetLoyaltyOfferProgramsPidVouchersResponse {
+    /// Contact id associated with the current reward
+    #[serde(rename = "contactId", skip_serializing_if = "Option::is_none", default)]
+    pub contact_id: Option<i64>,
+    /// List of all the rewards for current contact
+    #[serde(
+        rename = "contactRewards",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub contact_rewards: Option<Vec<GetLoyaltyOfferProgramsPidVouchersResponseContactRewardsItem>>,
+    /// Count of the rewards associated with the current contact
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none", default)]
+    pub count: Option<i64>,
+    /// Loyalty Program Id for the contact
+    #[serde(
+        rename = "loyaltyProgramId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_program_id: Option<String>,
+    /// Loyalty Subscription Id for the contact
+    #[serde(
+        rename = "loyaltySubscriptionId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub loyalty_subscription_id: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -11493,7 +14228,7 @@ impl core::fmt::Display for CreateEmailCampaignRequestEmailExpirationDateUnit {
     }
 }
 
-/// To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy. Learn more about setting an email expiration date. For reference , ``https://help.brevo.com/hc/en-us/articles/4413566705298-Create-an-email-campaign``
+/// To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy. Learn more about setting an email expiration date. For reference , ``<https://help.brevo.com/hc/en-us/articles/4413566705298-Create-an-email-campaign``>
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CreateEmailCampaignRequestEmailExpirationDate {
@@ -11541,7 +14276,7 @@ pub struct CreateEmailCampaignRequestRecipients {
 pub struct CreateEmailCampaignRequestSender {
     /// Sender email. Must be a valid email address. Cannot be used together with `id` in the same request.
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Select the sender for the campaign on the basis of sender id. Cannot be used together with `email` in the same request. _In order to select a sender with a specific pool of IPs, dedicated IP users shall pass id (instead of email)._
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<i64>,
@@ -11585,7 +14320,7 @@ pub struct CreateEmailCampaignRequest {
         default
     )]
     pub attachment_url: Option<String>,
-    /// To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy. Learn more about setting an email expiration date. For reference , ``https://help.brevo.com/hc/en-us/articles/4413566705298-Create-an-email-campaign``
+    /// To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy. Learn more about setting an email expiration date. For reference , ``<https://help.brevo.com/hc/en-us/articles/4413566705298-Create-an-email-campaign``>
     #[serde(
         rename = "emailExpirationDate",
         skip_serializing_if = "Option::is_none",
@@ -11605,7 +14340,7 @@ pub struct CreateEmailCampaignRequest {
         default
     )]
     pub html_content: Option<String>,
-    /// **Mandatory if htmlContent and templateId are empty.** URL to the message (HTML). Cannot be used together with `htmlContent` or `templateId`. For example: **https://html.domain.com**
+    /// **Mandatory if htmlContent and templateId are empty.** URL to the message (HTML). Cannot be used together with `htmlContent` or `templateId`. For example: **<https://html.domain.com**>
     #[serde(rename = "htmlUrl", skip_serializing_if = "Option::is_none", default)]
     pub html_url: Option<String>,
     /// **Mandatory if ipWarmupEnable is set to true**. Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.
@@ -11665,7 +14400,7 @@ pub struct CreateEmailCampaignRequest {
     pub recipients: Option<CreateEmailCampaignRequestRecipients>,
     /// Email on which the campaign recipients will be able to reply to
     #[serde(rename = "replyTo", skip_serializing_if = "Option::is_none", default)]
-    pub reply_to: Option<String>,
+    pub reply_to: Option<crate::types::Email>,
     /// Sending UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result**. If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part). For example: **2017-06-01T12:30:00+02:00**
     #[serde(
         rename = "scheduledAt",
@@ -11886,7 +14621,7 @@ pub struct UpdateEmailCampaignRequestRecipients {
 pub struct UpdateEmailCampaignRequestSender {
     /// Sender email from which the campaign emails are sent
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Select the sender for the campaign on the basis of sender id. **In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)**.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<i64>,
@@ -12013,7 +14748,7 @@ pub struct UpdateEmailCampaignRequest {
     pub recurring: Option<bool>,
     /// Email on which campaign recipients will be able to reply to
     #[serde(rename = "replyTo", skip_serializing_if = "Option::is_none", default)]
-    pub reply_to: Option<String>,
+    pub reply_to: Option<crate::types::Email>,
     /// UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.** If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part).
     #[serde(
         rename = "scheduledAt",
@@ -12269,7 +15004,7 @@ impl core::fmt::Display for EmailExportRecipientsRequestRecipientsType {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct EmailExportRecipientsRequest {
-    /// Webhook called once the export process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479
+    /// Webhook called once the export process is finished. For reference, <https://help.brevo.com/hc/en-us/articles/360007666479>
     #[serde(rename = "notifyURL", skip_serializing_if = "Option::is_none", default)]
     pub notify_url: Option<String>,
     /// Type of recipients to export for a campaign
@@ -12570,7 +15305,7 @@ impl core::fmt::Display for RequestSmsRecipientExportRequestRecipientsType {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RequestSmsRecipientExportRequest {
-    /// URL that will be called once the export process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479
+    /// URL that will be called once the export process is finished. For reference, <https://help.brevo.com/hc/en-us/articles/360007666479>
     #[serde(rename = "notifyURL", skip_serializing_if = "Option::is_none", default)]
     pub notify_url: Option<String>,
     /// Filter the recipients based on how they interacted with the campaign
@@ -13284,6 +16019,863 @@ pub struct UpdateWhatsAppCampaignRequest {
     pub reschedule_for: Option<String>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCompaniesSort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetCompaniesSort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetCompaniesSort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+/// List of companies
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCompaniesResponse {
+    /// List of companies
+    #[serde(rename = "items", skip_serializing_if = "Option::is_none", default)]
+    pub items: Option<Vec<serde_json::Value>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCompaniesRequest {
+    /// Attributes for company creation
+    #[serde(
+        rename = "attributes",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attributes: Option<serde_json::Value>,
+    /// Country code if phone_number is passed in attributes.
+    #[serde(
+        rename = "countryCode",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub country_code: Option<i64>,
+    /// Contact ids to be linked with company
+    #[serde(
+        rename = "linkedContactsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_contacts_ids: Option<Vec<i64>>,
+    /// Deal ids to be linked with company
+    #[serde(
+        rename = "linkedDealsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_deals_ids: Option<Vec<String>>,
+    /// Name of company
+    #[serde(rename = "name")]
+    pub name: String,
+}
+
+/// Created company id
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCompaniesResponse {
+    /// Unique company id
+    #[serde(rename = "id")]
+    pub id: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCompaniesImportResponse {
+    /// The ID of the import process
+    #[serde(rename = "processId", skip_serializing_if = "Option::is_none", default)]
+    pub process_id: Option<i64>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatchCompaniesLinkUnlinkIdRequest {
+    /// Contact ids for contacts to be linked with company
+    #[serde(
+        rename = "linkContactIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub link_contact_ids: Option<Vec<i64>>,
+    /// Deal ids for deals to be linked with company
+    #[serde(
+        rename = "linkDealsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub link_deals_ids: Option<Vec<String>>,
+    /// Contact ids for contacts to be unlinked from company
+    #[serde(
+        rename = "unlinkContactIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub unlink_contact_ids: Option<Vec<i64>>,
+    /// Deal ids for deals to be unlinked from company
+    #[serde(
+        rename = "unlinkDealsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub unlink_deals_ids: Option<Vec<String>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatchCompaniesIdRequest {
+    /// Attributes for company update
+    #[serde(
+        rename = "attributes",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attributes: Option<serde_json::Value>,
+    /// Country code if phone_number is passed in attributes.
+    #[serde(
+        rename = "countryCode",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub country_code: Option<i64>,
+    /// Warning - Using PATCH on linkedContactIds replaces the list of linked contacts. Omitted IDs will be removed.
+    #[serde(
+        rename = "linkedContactsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_contacts_ids: Option<Vec<i64>>,
+    /// Warning - Using PATCH on linkedDealsIds replaces the list of linked deals. Omitted IDs will be removed.
+    #[serde(
+        rename = "linkedDealsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_deals_ids: Option<Vec<String>>,
+    /// Name of company
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+}
+
+/// The type of attribute (must be one of the defined enums)
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostCrmAttributesRequestAttributeType {
+    #[serde(rename = "text")]
+    Text,
+    #[serde(rename = "user")]
+    User,
+    #[serde(rename = "number")]
+    Number,
+    #[serde(rename = "single-select")]
+    SingleSelect,
+    #[serde(rename = "date")]
+    Date,
+    #[serde(rename = "boolean")]
+    Boolean,
+    #[serde(rename = "multi-choice")]
+    MultiChoice,
+}
+impl Default for PostCrmAttributesRequestAttributeType {
+    fn default() -> Self {
+        Self::Text
+    }
+}
+impl core::fmt::Display for PostCrmAttributesRequestAttributeType {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Text => write!(f, "text"),
+            Self::User => write!(f, "user"),
+            Self::Number => write!(f, "number"),
+            Self::SingleSelect => write!(f, "single-select"),
+            Self::Date => write!(f, "date"),
+            Self::Boolean => write!(f, "boolean"),
+            Self::MultiChoice => write!(f, "multi-choice"),
+        }
+    }
+}
+
+/// The type of object the attribute belongs to. Must be either `companies` or `deals`.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PostCrmAttributesRequestObjectType {
+    #[serde(rename = "companies")]
+    Companies,
+    #[serde(rename = "deals")]
+    Deals,
+}
+impl Default for PostCrmAttributesRequestObjectType {
+    fn default() -> Self {
+        Self::Companies
+    }
+}
+impl core::fmt::Display for PostCrmAttributesRequestObjectType {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Companies => write!(f, "companies"),
+            Self::Deals => write!(f, "deals"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmAttributesRequest {
+    /// The type of attribute (must be one of the defined enums)
+    #[serde(rename = "attributeType")]
+    pub attribute_type: PostCrmAttributesRequestAttributeType,
+    /// A description of the attribute
+    #[serde(
+        rename = "description",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub description: Option<String>,
+    /// The label for the attribute (max 50 characters, cannot be empty)
+    #[serde(rename = "label")]
+    pub label: String,
+    /// The type of object the attribute belongs to. Must be either `companies` or `deals`.
+    #[serde(rename = "objectType")]
+    pub object_type: PostCrmAttributesRequestObjectType,
+    /// Options for multi-choice or single-select attributes
+    #[serde(
+        rename = "optionsLabels",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub options_labels: Option<Vec<String>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmAttributesResponse {
+    /// Unique ID of the created attribute
+    #[serde(rename = "id")]
+    pub id: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatchCrmAttributesIdRequestOptionsLabelsItem {
+    /// Internal option identifier
+    #[serde(rename = "key")]
+    pub key: String,
+    /// Display label for the option
+    #[serde(rename = "value")]
+    pub value: String,
+}
+
+/// The type of object the attribute belongs to, it cannot be updated after creation
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum PatchCrmAttributesIdRequestObjectType {
+    #[serde(rename = "companies")]
+    Companies,
+    #[serde(rename = "deals")]
+    Deals,
+}
+impl Default for PatchCrmAttributesIdRequestObjectType {
+    fn default() -> Self {
+        Self::Companies
+    }
+}
+impl core::fmt::Display for PatchCrmAttributesIdRequestObjectType {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Companies => write!(f, "companies"),
+            Self::Deals => write!(f, "deals"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatchCrmAttributesIdRequest {
+    /// Attribute display label
+    #[serde(rename = "label", skip_serializing_if = "Option::is_none", default)]
+    pub label: Option<String>,
+    /// Updated labels for selectable options
+    #[serde(
+        rename = "optionsLabels",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub options_labels: Option<Vec<PatchCrmAttributesIdRequestOptionsLabelsItem>>,
+    /// The type of object the attribute belongs to, it cannot be updated after creation
+    #[serde(
+        rename = "objectType",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub object_type: Option<PatchCrmAttributesIdRequestObjectType>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmAttributesCompaniesResponseItemAttributeOptionsItem {
+    #[serde(rename = "key", skip_serializing_if = "Option::is_none", default)]
+    pub key: Option<String>,
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none", default)]
+    pub value: Option<String>,
+}
+
+/// Company attribute details
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmAttributesCompaniesResponseItem {
+    /// Internal name of the attribute
+    #[serde(
+        rename = "internalName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub internal_name: Option<String>,
+    /// Type of the attribute
+    #[serde(
+        rename = "attributeTypeName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attribute_type_name: Option<String>,
+    /// Display label of the attribute
+    #[serde(rename = "label", skip_serializing_if = "Option::is_none", default)]
+    pub label: Option<String>,
+    /// Options for single-select or multi-choice attributes
+    #[serde(
+        rename = "attributeOptions",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attribute_options: Option<Vec<GetCrmAttributesCompaniesResponseItemAttributeOptionsItem>>,
+    /// Whether this attribute is required
+    #[serde(
+        rename = "isRequired",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub is_required: Option<bool>,
+    /// Whether this attribute value is read-only
+    #[serde(
+        rename = "isValueReadonly",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub is_value_readonly: Option<bool>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmAttributesDealsResponseItemAttributeOptionsItem {
+    #[serde(rename = "key", skip_serializing_if = "Option::is_none", default)]
+    pub key: Option<String>,
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none", default)]
+    pub value: Option<String>,
+}
+
+/// Deal attribute details
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmAttributesDealsResponseItem {
+    /// Internal name of the attribute
+    #[serde(
+        rename = "internalName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub internal_name: Option<String>,
+    /// Type of the attribute
+    #[serde(
+        rename = "attributeTypeName",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attribute_type_name: Option<String>,
+    /// Display label of the attribute
+    #[serde(rename = "label", skip_serializing_if = "Option::is_none", default)]
+    pub label: Option<String>,
+    /// Options for single-select or multi-choice attributes
+    #[serde(
+        rename = "attributeOptions",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attribute_options: Option<Vec<GetCrmAttributesDealsResponseItemAttributeOptionsItem>>,
+    /// Whether this attribute is required
+    #[serde(
+        rename = "isRequired",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub is_required: Option<bool>,
+    /// Whether this attribute value is read-only
+    #[serde(
+        rename = "isValueReadonly",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub is_value_readonly: Option<bool>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmDealsSort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetCrmDealsSort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetCrmDealsSort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+/// List of Deals
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmDealsResponse {
+    /// List of deals
+    #[serde(rename = "items", skip_serializing_if = "Option::is_none", default)]
+    pub items: Option<Vec<serde_json::Value>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmDealsRequest {
+    /// Attributes for deal creation To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you want to create a deal on a specific pipeline and stage you can use the following attributes `pipeline` and `deal_stage`. Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`
+    #[serde(
+        rename = "attributes",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attributes: Option<serde_json::Value>,
+    /// Company ids to be linked with deal
+    #[serde(
+        rename = "linkedCompaniesIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_companies_ids: Option<Vec<String>>,
+    /// Contact ids to be linked with deal
+    #[serde(
+        rename = "linkedContactsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_contacts_ids: Option<Vec<i64>>,
+    /// Name of deal
+    #[serde(rename = "name")]
+    pub name: String,
+}
+
+/// Created deal id
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmDealsResponse {
+    /// Unique deal id
+    #[serde(rename = "id")]
+    pub id: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmDealsImportResponse {
+    /// The ID of the import process
+    #[serde(rename = "processId", skip_serializing_if = "Option::is_none", default)]
+    pub process_id: Option<i64>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatchCrmDealsLinkUnlinkIdRequest {
+    /// Company ids to be linked with deal
+    #[serde(
+        rename = "linkCompanyIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub link_company_ids: Option<Vec<String>>,
+    /// Contact ids for contacts to be linked with deal
+    #[serde(
+        rename = "linkContactIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub link_contact_ids: Option<Vec<i64>>,
+    /// Company ids to be unlinked from deal
+    #[serde(
+        rename = "unlinkCompanyIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub unlink_company_ids: Option<Vec<String>>,
+    /// Contact ids for contacts to be unlinked from deal
+    #[serde(
+        rename = "unlinkContactIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub unlink_contact_ids: Option<Vec<i64>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatchCrmDealsIdRequest {
+    /// Attributes for deal update To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you wish to update the pipeline of a deal you need to provide the `pipeline` and the `deal_stage` Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`
+    #[serde(
+        rename = "attributes",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub attributes: Option<serde_json::Value>,
+    /// Warning - Using PATCH on linkedCompaniesIds replaces the list of linked companies. Omitted IDs will be removed.
+    #[serde(
+        rename = "linkedCompaniesIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_companies_ids: Option<Vec<String>>,
+    /// Warning - Using PATCH on linkedContactIds replaces the list of linked contacts. Omitted IDs will be removed.
+    #[serde(
+        rename = "linkedContactsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub linked_contacts_ids: Option<Vec<i64>>,
+    /// Name of deal
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmFilesEntity {
+    #[serde(rename = "companies")]
+    Companies,
+    #[serde(rename = "deals")]
+    Deals,
+    #[serde(rename = "contacts")]
+    Contacts,
+}
+impl Default for GetCrmFilesEntity {
+    fn default() -> Self {
+        Self::Companies
+    }
+}
+impl core::fmt::Display for GetCrmFilesEntity {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Companies => write!(f, "companies"),
+            Self::Deals => write!(f, "deals"),
+            Self::Contacts => write!(f, "contacts"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmFilesSort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetCrmFilesSort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetCrmFilesSort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+/// Downloadable file link
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmFilesIdResponse {
+    /// A unique link to download the requested file.
+    #[serde(rename = "fileUrl", skip_serializing_if = "Option::is_none", default)]
+    pub file_url: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmNotesEntity {
+    #[serde(rename = "companies")]
+    Companies,
+    #[serde(rename = "deals")]
+    Deals,
+    #[serde(rename = "contacts")]
+    Contacts,
+}
+impl Default for GetCrmNotesEntity {
+    fn default() -> Self {
+        Self::Companies
+    }
+}
+impl core::fmt::Display for GetCrmNotesEntity {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Companies => write!(f, "companies"),
+            Self::Deals => write!(f, "deals"),
+            Self::Contacts => write!(f, "contacts"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmNotesSort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetCrmNotesSort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetCrmNotesSort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+/// Created Note ID
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmNotesResponse {
+    /// Unique note Id
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmTasksFilterStatus {
+    #[serde(rename = "done")]
+    Done,
+    #[serde(rename = "undone")]
+    Undone,
+}
+impl Default for GetCrmTasksFilterStatus {
+    fn default() -> Self {
+        Self::Done
+    }
+}
+impl core::fmt::Display for GetCrmTasksFilterStatus {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Done => write!(f, "done"),
+            Self::Undone => write!(f, "undone"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmTasksFilterDate {
+    #[serde(rename = "overdue")]
+    Overdue,
+    #[serde(rename = "today")]
+    Today,
+    #[serde(rename = "tomorrow")]
+    Tomorrow,
+    #[serde(rename = "week")]
+    Week,
+    #[serde(rename = "range")]
+    Range,
+}
+impl Default for GetCrmTasksFilterDate {
+    fn default() -> Self {
+        Self::Overdue
+    }
+}
+impl core::fmt::Display for GetCrmTasksFilterDate {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Overdue => write!(f, "overdue"),
+            Self::Today => write!(f, "today"),
+            Self::Tomorrow => write!(f, "tomorrow"),
+            Self::Week => write!(f, "week"),
+            Self::Range => write!(f, "range"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum GetCrmTasksSort {
+    #[serde(rename = "asc")]
+    Asc,
+    #[serde(rename = "desc")]
+    Desc,
+}
+impl Default for GetCrmTasksSort {
+    fn default() -> Self {
+        Self::Asc
+    }
+}
+impl core::fmt::Display for GetCrmTasksSort {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Asc => write!(f, "asc"),
+            Self::Desc => write!(f, "desc"),
+        }
+    }
+}
+
+/// List of tasks
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmTasksResponse {
+    /// List of tasks
+    #[serde(rename = "items", skip_serializing_if = "Option::is_none", default)]
+    pub items: Option<Vec<serde_json::Value>>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmTasksRequest {
+    /// To assign a task to a user you can use either the account email or ID.
+    #[serde(
+        rename = "assignToId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub assign_to_id: Option<String>,
+    /// Companies ids for companies a task is linked to
+    #[serde(
+        rename = "companiesIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub companies_ids: Option<Vec<String>>,
+    /// Contact ids for contacts linked to this task
+    #[serde(
+        rename = "contactsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub contacts_ids: Option<Vec<i64>>,
+    /// Task due date and time
+    #[serde(rename = "date")]
+    pub date: time::OffsetDateTime,
+    /// Deal ids for deals a task is linked to
+    #[serde(rename = "dealsIds", skip_serializing_if = "Option::is_none", default)]
+    pub deals_ids: Option<Vec<String>>,
+    /// Task marked as done
+    #[serde(rename = "done", skip_serializing_if = "Option::is_none", default)]
+    pub done: Option<bool>,
+    /// Duration of task in milliseconds [1 minute = 60000 ms]
+    #[serde(rename = "duration", skip_serializing_if = "Option::is_none", default)]
+    pub duration: Option<i64>,
+    /// Name of task
+    #[serde(rename = "name")]
+    pub name: String,
+    /// Notes added to a task
+    #[serde(rename = "notes", skip_serializing_if = "Option::is_none", default)]
+    pub notes: Option<String>,
+    #[serde(rename = "reminder", skip_serializing_if = "Option::is_none", default)]
+    pub reminder: Option<serde_json::Value>,
+    /// Id for type of task e.g Call / Email / Meeting etc.
+    #[serde(rename = "taskTypeId")]
+    pub task_type_id: String,
+}
+
+/// Task Details
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCrmTasksResponse {
+    /// Unique task id
+    #[serde(rename = "id")]
+    pub id: String,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatchCrmTasksIdRequest {
+    /// To assign a task to a user you can use either the account email or ID.
+    #[serde(
+        rename = "assignToId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub assign_to_id: Option<String>,
+    /// Companies ids for companies a task is linked to
+    #[serde(
+        rename = "companiesIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub companies_ids: Option<Vec<String>>,
+    /// Contact ids for contacts linked to this task
+    #[serde(
+        rename = "contactsIds",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub contacts_ids: Option<Vec<i64>>,
+    /// Task date/time
+    #[serde(rename = "date", skip_serializing_if = "Option::is_none", default)]
+    pub date: Option<time::OffsetDateTime>,
+    /// Deal ids for deals a task is linked to
+    #[serde(rename = "dealsIds", skip_serializing_if = "Option::is_none", default)]
+    pub deals_ids: Option<Vec<String>>,
+    /// Task marked as done
+    #[serde(rename = "done", skip_serializing_if = "Option::is_none", default)]
+    pub done: Option<bool>,
+    /// Duration of task in milliseconds [1 minute = 60000 ms]
+    #[serde(rename = "duration", skip_serializing_if = "Option::is_none", default)]
+    pub duration: Option<i64>,
+    /// Name of task
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
+    pub name: Option<String>,
+    /// Notes added to a task
+    #[serde(rename = "notes", skip_serializing_if = "Option::is_none", default)]
+    pub notes: Option<String>,
+    #[serde(rename = "reminder", skip_serializing_if = "Option::is_none", default)]
+    pub reminder: Option<serde_json::Value>,
+    /// Id for type of task e.g Call / Email / Meeting etc.
+    #[serde(
+        rename = "taskTypeId",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub task_type_id: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetCrmTasktypesResponseItem {
+    /// Id of task type
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
+    pub id: Option<String>,
+    /// Title of task type
+    #[serde(rename = "title", skip_serializing_if = "Option::is_none", default)]
+    pub title: Option<String>,
+}
+
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SendWhatsappMessageResponse {
@@ -13497,13 +17089,13 @@ pub struct GetTransacBlockedContactsResponseContactsItem {
     pub blocked_at: String,
     /// Email address of the blocked or unsubscribed contact
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Reason for blocking / unsubscribing
     #[serde(rename = "reason")]
     pub reason: GetTransacBlockedContactsResponseContactsItemReason,
     /// Sender email address of the blocked or unsubscribed contact
     #[serde(rename = "senderEmail")]
-    pub sender_email: String,
+    pub sender_email: crate::types::Email,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -13541,7 +17133,7 @@ pub struct DeleteHardbouncesRequest {
         skip_serializing_if = "Option::is_none",
         default
     )]
-    pub contact_email: Option<String>,
+    pub contact_email: Option<crate::types::Email>,
     /// Ending date (YYYY-MM-DD) of the time period for deletion. The hardbounces until this date will be deleted. Must be greater than or equal to the startDate
     #[serde(rename = "endDate", skip_serializing_if = "Option::is_none", default)]
     pub end_date: Option<String>,
@@ -13576,7 +17168,7 @@ pub struct SendTransacEmailRequestBccItem {
     pub contact_pixel_tracking_consent: Option<bool>,
     /// BCC recipient email address
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name of the BCC recipient. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13594,7 +17186,7 @@ pub struct SendTransacEmailRequestCcItem {
     pub contact_pixel_tracking_consent: Option<bool>,
     /// CC recipient email address
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name of the CC recipient. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13612,7 +17204,7 @@ pub struct SendTransacEmailRequestMessageVersionsItemBccItem {
     pub contact_pixel_tracking_consent: Option<bool>,
     /// BCC recipient email address
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name of the BCC recipient. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13630,7 +17222,7 @@ pub struct SendTransacEmailRequestMessageVersionsItemCcItem {
     pub contact_pixel_tracking_consent: Option<bool>,
     /// CC recipient email address
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name of the CC recipient. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13642,7 +17234,7 @@ pub struct SendTransacEmailRequestMessageVersionsItemCcItem {
 pub struct SendTransacEmailRequestMessageVersionsItemReplyTo {
     /// Email address in reply to
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name for the reply-to address. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13660,7 +17252,7 @@ pub struct SendTransacEmailRequestMessageVersionsItemToItem {
     pub contact_pixel_tracking_consent: Option<bool>,
     /// Email address of the recipient
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name of the recipient. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13709,7 +17301,7 @@ pub struct SendTransacEmailRequestMessageVersionsItem {
 pub struct SendTransacEmailRequestReplyTo {
     /// Email address in reply to
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name for the reply-to address. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13721,7 +17313,7 @@ pub struct SendTransacEmailRequestReplyTo {
 pub struct SendTransacEmailRequestSender {
     /// Sender email address. Required when `id` is not provided.
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Sender identifier. Required when `email` is not provided. Use this field to select a sender with a specific IP pool (dedicated IP users only).
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<i64>,
@@ -13742,7 +17334,7 @@ pub struct SendTransacEmailRequestToItem {
     pub contact_pixel_tracking_consent: Option<bool>,
     /// Email address of the recipient
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Display name of the recipient. Maximum length is 70 characters.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
@@ -13777,7 +17369,7 @@ pub struct SendTransacEmailRequest {
         default
     )]
     pub html_content: Option<String>,
-    /// Array of message version objects for sending customized email variants. The `templateId` can be customized per version only if a global `templateId` is provided. The `htmlContent` and `textContent` can be customized per version only if at least one of these is present in the global parameters. Global parameters such as `to` (required), `bcc`, `cc`, `replyTo`, and `subject` can be customized per version. Maximum total recipients per API request is 2000. Maximum recipients per message version is 99. Individual `params` objects must not exceed 100 KB. Cumulative `params` across all versions must not exceed 1000 KB. See https://developers.brevo.com/docs/batch-send-transactional-emails for detailed usage instructions.
+    /// Array of message version objects for sending customized email variants. The `templateId` can be customized per version only if a global `templateId` is provided. The `htmlContent` and `textContent` can be customized per version only if at least one of these is present in the global parameters. Global parameters such as `to` (required), `bcc`, `cc`, `replyTo`, and `subject` can be customized per version. Maximum total recipients per API request is 2000. Maximum recipients per message version is 99. Individual `params` objects must not exceed 100 KB. Cumulative `params` across all versions must not exceed 1000 KB. See <https://developers.brevo.com/docs/batch-send-transactional-emails> for detailed usage instructions.
     #[serde(
         rename = "messageVersions",
         skip_serializing_if = "Option::is_none",
@@ -13913,10 +17505,10 @@ pub struct GetTransacEmailsListResponseTransactionalEmailsItem {
     pub date: String,
     /// Email address to which transactional email has been sent
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Email address of the sender from which the email was sent
     #[serde(rename = "from", skip_serializing_if = "Option::is_none", default)]
-    pub from: Option<String>,
+    pub from: Option<crate::types::Email>,
     /// Message Id of the sent email
     #[serde(rename = "messageId")]
     pub message_id: String,
@@ -13981,7 +17573,7 @@ pub struct GetTransacEmailContentResponse {
     pub date: String,
     /// Email address to which transactional email has been sent
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Series of events which occurred on the transactional email
     #[serde(rename = "events")]
     pub events: Vec<GetTransacEmailContentResponseEventsItem>,
@@ -14209,13 +17801,13 @@ pub struct GetEmailEventReportResponseEventsItem {
     pub date: String,
     /// Email address which generates the event
     #[serde(rename = "email")]
-    pub email: String,
+    pub email: crate::types::Email,
     /// Event which occurred
     #[serde(rename = "event")]
     pub event: GetEmailEventReportResponseEventsItemEvent,
     /// Sender email from which the emails are sent
     #[serde(rename = "from", skip_serializing_if = "Option::is_none", default)]
-    pub from: Option<String>,
+    pub from: Option<crate::types::Email>,
     /// IP from which the user has opened the email or clicked on the link (only available if the event is opened or clicks)
     #[serde(rename = "ip", skip_serializing_if = "Option::is_none", default)]
     pub ip: Option<String>,
@@ -14433,7 +18025,7 @@ pub struct GetSmtpTemplatesResponse {
 pub struct CreateSmtpTemplateRequestSender {
     /// Email of the sender
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Select the sender for the template on the basis of sender id. _In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)_.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<i64>,
@@ -14467,7 +18059,7 @@ pub struct CreateSmtpTemplateRequest {
     pub is_active: Option<bool>,
     /// Email on which campaign recipients will be able to reply to
     #[serde(rename = "replyTo", skip_serializing_if = "Option::is_none", default)]
-    pub reply_to: Option<String>,
+    pub reply_to: Option<crate::types::Email>,
     /// Sender details including id or email and name (_optional_). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
     #[serde(rename = "sender")]
     pub sender: CreateSmtpTemplateRequestSender,
@@ -14491,7 +18083,7 @@ pub struct CreateSmtpTemplateRequest {
 pub struct UpdateSmtpTemplateRequestSender {
     /// Email of the sender
     #[serde(rename = "email", skip_serializing_if = "Option::is_none", default)]
-    pub email: Option<String>,
+    pub email: Option<crate::types::Email>,
     /// Select the sender for the template on the basis of sender id. _In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)_.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none", default)]
     pub id: Option<i64>,
@@ -14525,7 +18117,7 @@ pub struct UpdateSmtpTemplateRequest {
     pub is_active: Option<bool>,
     /// Email on which campaign recipients will be able to reply to
     #[serde(rename = "replyTo", skip_serializing_if = "Option::is_none", default)]
-    pub reply_to: Option<String>,
+    pub reply_to: Option<crate::types::Email>,
     /// Sender details including id or email and name (_optional_). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example: **{"name":"xyz", "email":"example@abc.com"}** **{"name":"xyz", "id":123}**
     #[serde(rename = "sender", skip_serializing_if = "Option::is_none", default)]
     pub sender: Option<UpdateSmtpTemplateRequestSender>,

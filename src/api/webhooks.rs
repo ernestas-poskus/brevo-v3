@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Webhooks endpoints.
@@ -64,7 +65,7 @@ impl WebhooksApi {
     }
 
     /// Delete a webhook
-    pub async fn delete_webhook(&self, webhook_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_webhook(&self, webhook_id: WebhookId) -> Result<serde_json::Value> {
         let path = format!("/webhooks/{webhook_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -73,7 +74,7 @@ impl WebhooksApi {
     }
 
     /// Get a webhook details
-    pub async fn get_webhook(&self, webhook_id: i64) -> Result<serde_json::Value> {
+    pub async fn get_webhook(&self, webhook_id: WebhookId) -> Result<serde_json::Value> {
         let path = format!("/webhooks/{webhook_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);
@@ -84,7 +85,7 @@ impl WebhooksApi {
     /// Update a webhook
     pub async fn update_webhook(
         &self,
-        webhook_id: i64,
+        webhook_id: WebhookId,
         body: &UpdateWebhookRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/webhooks/{webhook_id}");

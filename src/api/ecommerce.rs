@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Ecommerce endpoints.
@@ -95,6 +96,100 @@ impl EcommerceApi {
     /// Get a category details
     pub async fn get_category_info(&self, id: &str) -> Result<serde_json::Value> {
         let path = format!("/categories/{id}");
+        let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
+        let mut req_builder = self.client.http().request(Method::GET, url);
+        let req = req_builder.build()?;
+        self.client.execute(req).await
+    }
+
+    /// Activate the eCommerce app
+    pub async fn post_ecommerce_activate(&self) -> Result<serde_json::Value> {
+        let path = "/ecommerce/activate";
+        let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
+        let mut req_builder = self.client.http().request(Method::POST, url);
+        let req = req_builder.build()?;
+        self.client.execute(req).await
+    }
+
+    /// Get attribution metrics for one or more Brevo campaigns or workflows
+    pub async fn get_ecommerce_attribution_metrics(
+        &self,
+        period_from: Option<time::OffsetDateTime>,
+        period_to: Option<time::OffsetDateTime>,
+        email_campaign_id: Option<&[String]>,
+        sms_campaign_id: Option<&[String]>,
+        automation_workflow_email_id: Option<&[String]>,
+        automation_workflow_sms_id: Option<&[String]>,
+    ) -> Result<GetEcommerceAttributionMetricsResponse> {
+        let path = "/ecommerce/attribution/metrics";
+        let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
+        {
+            let mut query_pairs = url.query_pairs_mut();
+            if let Some(val) = period_from {
+                query_pairs.append_pair("periodFrom", &val.to_string());
+            }
+            if let Some(val) = period_to {
+                query_pairs.append_pair("periodTo", &val.to_string());
+            }
+            if let Some(items) = email_campaign_id {
+                for item in items {
+                    query_pairs.append_pair("emailCampaignId[]", &item.to_string());
+                }
+            }
+            if let Some(items) = sms_campaign_id {
+                for item in items {
+                    query_pairs.append_pair("smsCampaignId[]", &item.to_string());
+                }
+            }
+            if let Some(items) = automation_workflow_email_id {
+                for item in items {
+                    query_pairs.append_pair("automationWorkflowEmailId[]", &item.to_string());
+                }
+            }
+            if let Some(items) = automation_workflow_sms_id {
+                for item in items {
+                    query_pairs.append_pair("automationWorkflowSmsId[]", &item.to_string());
+                }
+            }
+        }
+        let mut req_builder = self.client.http().request(Method::GET, url);
+        let req = req_builder.build()?;
+        self.client.execute(req).await
+    }
+
+    /// Get detailed attribution metrics for a single Brevo campaign or workflow
+    pub async fn get_ecommerce_attribution_metrics_conversion_source_conversion_source_id(
+        &self,
+        conversion_source: GetEcommerceAttributionMetricsConversionSourceConversionSourceIdConversionSource,
+        conversion_source_id: &ConversionSourceId,
+    ) -> Result<GetEcommerceAttributionMetricsConversionSourceConversionSourceIdResponse> {
+        let path =
+            format!("/ecommerce/attribution/metrics/{conversion_source}/{conversion_source_id}");
+        let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
+        let mut req_builder = self.client.http().request(Method::GET, url);
+        let req = req_builder.build()?;
+        self.client.execute(req).await
+    }
+
+    /// Get attributed product sales for a single Brevo campaign or workflow
+    pub async fn get_ecommerce_attribution_products_conversion_source_conversion_source_id(
+        &self,
+        conversion_source: GetEcommerceAttributionProductsConversionSourceConversionSourceIdConversionSource,
+        conversion_source_id: &ConversionSourceId,
+    ) -> Result<GetEcommerceAttributionProductsConversionSourceConversionSourceIdResponse> {
+        let path =
+            format!("/ecommerce/attribution/products/{conversion_source}/{conversion_source_id}");
+        let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
+        let mut req_builder = self.client.http().request(Method::GET, url);
+        let req = req_builder.build()?;
+        self.client.execute(req).await
+    }
+
+    /// Get the ISO 4217 compliant display currency code for your Brevo account
+    pub async fn get_ecommerce_config_display_currency(
+        &self,
+    ) -> Result<GetEcommerceConfigDisplayCurrencyResponse> {
+        let path = "/ecommerce/config/displayCurrency";
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);
         let req = req_builder.build()?;

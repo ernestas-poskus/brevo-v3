@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Senders endpoints.
@@ -22,7 +23,7 @@ impl SendersApi {
     pub async fn get_senders(
         &self,
         ip: Option<&str>,
-        domain: Option<&str>,
+        domain: Option<&DomainName>,
     ) -> Result<GetSendersResponse> {
         let path = "/senders";
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -60,7 +61,7 @@ impl SendersApi {
     }
 
     /// Delete a sender
-    pub async fn delete_sender(&self, sender_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_sender(&self, sender_id: SenderId) -> Result<serde_json::Value> {
         let path = format!("/senders/{sender_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -71,7 +72,7 @@ impl SendersApi {
     /// Update a sender
     pub async fn update_sender(
         &self,
-        sender_id: i64,
+        sender_id: SenderId,
         body: &UpdateSenderRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/senders/{sender_id}");
@@ -83,7 +84,10 @@ impl SendersApi {
     }
 
     /// Get all the dedicated IPs for a specific sender
-    pub async fn get_ips_from_sender(&self, sender_id: i64) -> Result<GetIpsFromSenderResponse> {
+    pub async fn get_ips_from_sender(
+        &self,
+        sender_id: SenderId,
+    ) -> Result<GetIpsFromSenderResponse> {
         let path = format!("/senders/{sender_id}/ips");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);
@@ -94,7 +98,7 @@ impl SendersApi {
     /// Validate a sender using OTP
     pub async fn validate_sender_by_otp(
         &self,
-        sender_id: i64,
+        sender_id: SenderId,
         body: &ValidateSenderByOTPRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/senders/{sender_id}/validate");

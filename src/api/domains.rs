@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Domains endpoints.
@@ -38,7 +39,7 @@ impl DomainsApi {
     }
 
     /// Delete a sender domain
-    pub async fn delete_domain(&self, domain_name: &str) -> Result<serde_json::Value> {
+    pub async fn delete_domain(&self, domain_name: &DomainName) -> Result<serde_json::Value> {
         let path = format!("/senders/domains/{domain_name}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -49,7 +50,7 @@ impl DomainsApi {
     /// Get a sender domain configuration
     pub async fn get_domain_configuration(
         &self,
-        domain_name: &str,
+        domain_name: &DomainName,
     ) -> Result<GetDomainConfigurationResponse> {
         let path = format!("/senders/domains/{domain_name}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -61,7 +62,7 @@ impl DomainsApi {
     /// Authenticate a sender domain
     pub async fn authenticate_domain(
         &self,
-        domain_name: &str,
+        domain_name: &DomainName,
     ) -> Result<AuthenticateDomainResponse> {
         let path = format!("/senders/domains/{domain_name}/authenticate");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;

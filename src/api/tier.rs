@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Tier endpoints.
@@ -21,9 +22,9 @@ impl TierApi {
     /// Assign a tier
     pub async fn add_subscription_to_tier(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         cid: &str,
-        tid: &str,
+        tid: &TierId,
     ) -> Result<AddSubscriptionToTierResponse> {
         let path = format!("/loyalty/tier/programs/{pid}/contacts/{cid}/tiers/{tid}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -35,7 +36,7 @@ impl TierApi {
     /// List tier groups
     pub async fn get_list_of_tier_groups(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         version: Option<GetListOfTierGroupsVersion>,
     ) -> Result<GetListOfTierGroupsResponse> {
         let path = format!("/loyalty/tier/programs/{pid}/tier-groups");
@@ -54,7 +55,7 @@ impl TierApi {
     /// Create a tier group
     pub async fn create_tier_group(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         body: &CreateTierGroupRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/tier/programs/{pid}/tier-groups");
@@ -66,7 +67,11 @@ impl TierApi {
     }
 
     /// Delete tier group
-    pub async fn delete_tier_group(&self, pid: &str, gid: &str) -> Result<serde_json::Value> {
+    pub async fn delete_tier_group(
+        &self,
+        pid: &ProgramId,
+        gid: &TierGroupId,
+    ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/tier/programs/{pid}/tier-groups/{gid}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -77,8 +82,8 @@ impl TierApi {
     /// Get tier group
     pub async fn get_tier_group(
         &self,
-        pid: &str,
-        gid: &str,
+        pid: &ProgramId,
+        gid: &TierGroupId,
         version: Option<GetTierGroupVersion>,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/tier/programs/{pid}/tier-groups/{gid}");
@@ -97,8 +102,8 @@ impl TierApi {
     /// Update tier group
     pub async fn update_tier_group(
         &self,
-        pid: &str,
-        gid: &str,
+        pid: &ProgramId,
+        gid: &TierGroupId,
         body: &UpdateTierGroupRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/tier/programs/{pid}/tier-groups/{gid}");
@@ -112,8 +117,8 @@ impl TierApi {
     /// Create a tier
     pub async fn create_tier_for_tier_group(
         &self,
-        pid: &str,
-        gid: &str,
+        pid: &ProgramId,
+        gid: &TierGroupId,
         body: &CreateTierForTierGroupRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/tier/programs/{pid}/tier-groups/{gid}/tiers");
@@ -127,7 +132,7 @@ impl TierApi {
     /// List tiers
     pub async fn get_loyalty_program_tier(
         &self,
-        pid: &str,
+        pid: &ProgramId,
         version: Option<GetLoyaltyProgramTierVersion>,
     ) -> Result<GetLoyaltyProgramTierResponse> {
         let path = format!("/loyalty/tier/programs/{pid}/tiers");
@@ -144,7 +149,7 @@ impl TierApi {
     }
 
     /// Delete tier
-    pub async fn delete_tier(&self, pid: &str, tid: &str) -> Result<serde_json::Value> {
+    pub async fn delete_tier(&self, pid: &ProgramId, tid: &TierId) -> Result<serde_json::Value> {
         let path = format!("/loyalty/tier/programs/{pid}/tiers/{tid}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -155,8 +160,8 @@ impl TierApi {
     /// Update tier
     pub async fn update_tier(
         &self,
-        pid: &str,
-        tid: &str,
+        pid: &ProgramId,
+        tid: &TierId,
         body: &UpdateTierRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/loyalty/tier/programs/{pid}/tiers/{tid}");

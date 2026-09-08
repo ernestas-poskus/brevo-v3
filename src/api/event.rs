@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Event endpoints.
@@ -21,7 +22,7 @@ impl EventApi {
     /// Get events
     pub async fn get_events(
         &self,
-        contact_id: Option<&[i64]>,
+        contact_id: Option<ContactId>,
         event_name: Option<&[String]>,
         object_type: Option<&[String]>,
         start_date: Option<&str>,
@@ -33,10 +34,8 @@ impl EventApi {
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         {
             let mut query_pairs = url.query_pairs_mut();
-            if let Some(items) = contact_id {
-                for item in items {
-                    query_pairs.append_pair("contact_id", &item.to_string());
-                }
+            if let Some(val) = contact_id {
+                query_pairs.append_pair("contact_id", &val.to_string());
             }
             if let Some(items) = event_name {
                 for item in items {

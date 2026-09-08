@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for TransactionalWhatsApp endpoints.
@@ -39,7 +40,7 @@ impl TransactionalWhatsAppApi {
         start_date: Option<&str>,
         end_date: Option<&str>,
         days: Option<i64>,
-        contact_number: Option<&str>,
+        contact_number: Option<&PhoneNumber>,
         event: Option<GetWhatsappEventReportEvent>,
         sort: Option<GetWhatsappEventReportSort>,
     ) -> Result<GetWhatsappEventReportResponse> {

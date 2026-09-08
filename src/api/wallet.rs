@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Wallet endpoints.
@@ -21,8 +22,8 @@ impl WalletApi {
     /// Get a pass installation URL for a contact
     pub async fn get_wallet_pass_install_url(
         &self,
-        pass_id: &str,
-        contact_id: i64,
+        pass_id: &PassId,
+        contact_id: ContactId,
     ) -> Result<serde_json::Value> {
         let path = format!("/wallet/passes/{pass_id}/installUrl/{contact_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;

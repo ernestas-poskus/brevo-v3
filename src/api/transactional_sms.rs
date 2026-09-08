@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for TransactionalSMS endpoints.
@@ -82,7 +83,7 @@ impl TransactionalSMSApi {
         end_date: Option<&str>,
         offset: Option<i64>,
         days: Option<i64>,
-        phone_number: Option<&str>,
+        phone_number: Option<&PhoneNumber>,
         event: Option<GetSmsEventsEvent>,
         tags: Option<&str>,
         sort: Option<GetSmsEventsSort>,

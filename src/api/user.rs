@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for User endpoints.
@@ -30,7 +31,7 @@ impl UserApi {
     /// Revoke user permission
     pub async fn put_revoke_user_permission(
         &self,
-        email: &str,
+        email: &Email,
     ) -> Result<PutRevokeUserPermissionResponse> {
         let path = format!("/organization/user/invitation/revoke/{email}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -53,7 +54,7 @@ impl UserApi {
     pub async fn putresendcancelinvitation(
         &self,
         action: PutresendcancelinvitationAction,
-        email: &str,
+        email: &Email,
     ) -> Result<PutresendcancelinvitationResponse> {
         let path = format!("/organization/user/invitation/{action}/{email}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -76,7 +77,7 @@ impl UserApi {
     }
 
     /// Check user permission
-    pub async fn get_user_permission(&self, email: &str) -> Result<GetUserPermissionResponse> {
+    pub async fn get_user_permission(&self, email: &Email) -> Result<GetUserPermissionResponse> {
         let path = format!("/organization/user/{email}/permissions");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);

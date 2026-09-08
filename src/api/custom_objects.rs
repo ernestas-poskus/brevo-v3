@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for CustomObjects endpoints.
@@ -79,7 +80,7 @@ impl CustomObjectsApi {
         object_type: &str,
         id: Option<i64>,
         ext_id: Option<&str>,
-        email: Option<&str>,
+        email: Option<&Email>,
         sms: Option<&str>,
         type_: Option<&[String]>,
         offset: Option<i64>,

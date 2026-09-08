@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for TransactionalEmails endpoints.
@@ -58,6 +59,18 @@ impl TransactionalEmailsApi {
         self.client.execute(req).await
     }
 
+    /// Unblock or resubscribe a transactional contact
+    pub async fn delete_smtp_blocked_contacts_email(
+        &self,
+        email: &Email,
+    ) -> Result<serde_json::Value> {
+        let path = format!("/smtp/blockedContacts/{email}");
+        let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
+        let mut req_builder = self.client.http().request(Method::DELETE, url);
+        let req = req_builder.build()?;
+        self.client.execute(req).await
+    }
+
     /// Get the list of blocked domains
     pub async fn get_blocked_domains(&self) -> Result<GetBlockedDomainsResponse> {
         let path = "/smtp/blockedDomains";
@@ -81,7 +94,7 @@ impl TransactionalEmailsApi {
     }
 
     /// Unblock an existing domain from the list of blocked domains
-    pub async fn delete_blocked_domain(&self, domain: &str) -> Result<serde_json::Value> {
+    pub async fn delete_blocked_domain(&self, domain: &DomainName) -> Result<serde_json::Value> {
         let path = format!("/smtp/blockedDomains/{domain}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -118,7 +131,7 @@ impl TransactionalEmailsApi {
     /// Delete scheduled emails by batchId or messageId
     pub async fn delete_scheduled_email_by_id(
         &self,
-        identifier: &str,
+        identifier: &Email,
     ) -> Result<serde_json::Value> {
         let path = format!("/smtp/email/{identifier}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
@@ -130,7 +143,7 @@ impl TransactionalEmailsApi {
     /// Fetch scheduled emails by batchId or messageId
     pub async fn get_scheduled_email_by_id(
         &self,
-        identifier: &str,
+        identifier: &Email,
         start_date: Option<time::Date>,
         end_date: Option<time::Date>,
         sort: Option<GetScheduledEmailByIdSort>,
@@ -169,9 +182,9 @@ impl TransactionalEmailsApi {
     /// Get the list of transactional emails on the basis of allowed filters
     pub async fn get_transac_emails_list(
         &self,
-        email: Option<&str>,
-        template_id: Option<i64>,
-        message_id: Option<&str>,
+        email: Option<&Email>,
+        template_id: Option<TemplateId>,
+        message_id: Option<MessageId>,
         start_date: Option<&str>,
         end_date: Option<&str>,
         sort: Option<GetTransacEmailsListSort>,
@@ -224,6 +237,29 @@ impl TransactionalEmailsApi {
         self.client.execute(req).await
     }
 
+    /// Delete an SMTP transactional log
+    pub async fn delete_smtp_log_identifier(
+        &self,
+        identifier: &Email,
+        from_date: Option<&str>,
+        to_date: Option<&str>,
+    ) -> Result<serde_json::Value> {
+        let path = format!("/smtp/log/{identifier}");
+        let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
+        {
+            let mut query_pairs = url.query_pairs_mut();
+            if let Some(val) = from_date {
+                query_pairs.append_pair("from_date", &val.to_string());
+            }
+            if let Some(val) = to_date {
+                query_pairs.append_pair("to_date", &val.to_string());
+            }
+        }
+        let mut req_builder = self.client.http().request(Method::DELETE, url);
+        let req = req_builder.build()?;
+        self.client.execute(req).await
+    }
+
     /// Get your transactional email activity aggregated over a period of time
     pub async fn get_aggregated_smtp_report(
         &self,
@@ -262,11 +298,11 @@ impl TransactionalEmailsApi {
         start_date: Option<&str>,
         end_date: Option<&str>,
         days: Option<i64>,
-        email: Option<&str>,
+        email: Option<&Email>,
         event: Option<GetEmailEventReportEvent>,
         tags: Option<&str>,
-        message_id: Option<&str>,
-        template_id: Option<i64>,
+        message_id: Option<MessageId>,
+        template_id: Option<TemplateId>,
         sort: Option<GetEmailEventReportSort>,
     ) -> Result<GetEmailEventReportResponse> {
         let path = "/smtp/statistics/events";
@@ -415,7 +451,7 @@ impl TransactionalEmailsApi {
     }
 
     /// Delete an inactive email template
-    pub async fn delete_smtp_template(&self, template_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_smtp_template(&self, template_id: TemplateId) -> Result<serde_json::Value> {
         let path = format!("/smtp/templates/{template_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -424,10 +460,7 @@ impl TransactionalEmailsApi {
     }
 
     /// Returns the template information
-    pub async fn get_smtp_template(
-        &self,
-        template_id: serde_json::Value,
-    ) -> Result<serde_json::Value> {
+    pub async fn get_smtp_template(&self, template_id: TemplateId) -> Result<serde_json::Value> {
         let path = format!("/smtp/templates/{template_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);
@@ -438,7 +471,7 @@ impl TransactionalEmailsApi {
     /// Update an email template
     pub async fn update_smtp_template(
         &self,
-        template_id: serde_json::Value,
+        template_id: TemplateId,
         body: &UpdateSmtpTemplateRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/smtp/templates/{template_id}");
@@ -452,7 +485,7 @@ impl TransactionalEmailsApi {
     /// Send a template to your test list
     pub async fn send_test_template(
         &self,
-        template_id: i64,
+        template_id: TemplateId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/smtp/templates/{template_id}/sendTest");

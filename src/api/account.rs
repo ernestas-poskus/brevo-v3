@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for Account endpoints.
@@ -32,7 +33,7 @@ impl AccountApi {
         &self,
         start_date: Option<&str>,
         end_date: Option<&str>,
-        email: Option<&str>,
+        email: Option<&Email>,
         limit: Option<i64>,
         offset: Option<i64>,
     ) -> Result<GetAccountActivityResponse> {

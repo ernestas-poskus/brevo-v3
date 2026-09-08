@@ -5,6 +5,7 @@
 use crate::client::BrevoClient;
 use crate::error::{Error, Result};
 use crate::models::*;
+use crate::types::*;
 use reqwest::Method;
 
 /// Client for SMSCampaigns endpoints.
@@ -70,7 +71,7 @@ impl SMSCampaignsApi {
     }
 
     /// Delete an SMS campaign
-    pub async fn delete_sms_campaign(&self, campaign_id: i64) -> Result<serde_json::Value> {
+    pub async fn delete_sms_campaign(&self, campaign_id: CampaignId) -> Result<serde_json::Value> {
         let path = format!("/smsCampaigns/{campaign_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::DELETE, url);
@@ -79,7 +80,10 @@ impl SMSCampaignsApi {
     }
 
     /// Get an SMS campaign
-    pub async fn get_sms_campaign(&self, campaign_id: i64) -> Result<GetSmsCampaignResponse> {
+    pub async fn get_sms_campaign(
+        &self,
+        campaign_id: CampaignId,
+    ) -> Result<GetSmsCampaignResponse> {
         let path = format!("/smsCampaigns/{campaign_id}");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::GET, url);
@@ -90,7 +94,7 @@ impl SMSCampaignsApi {
     /// Update an SMS campaign
     pub async fn update_sms_campaign(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &UpdateSmsCampaignRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/smsCampaigns/{campaign_id}");
@@ -104,7 +108,7 @@ impl SMSCampaignsApi {
     /// Export an SMS campaign's recipients
     pub async fn request_sms_recipient_export(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &RequestSmsRecipientExportRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/smsCampaigns/{campaign_id}/exportRecipients");
@@ -116,7 +120,10 @@ impl SMSCampaignsApi {
     }
 
     /// Send your SMS campaign immediately
-    pub async fn send_sms_campaign_now(&self, campaign_id: i64) -> Result<serde_json::Value> {
+    pub async fn send_sms_campaign_now(
+        &self,
+        campaign_id: CampaignId,
+    ) -> Result<serde_json::Value> {
         let path = format!("/smsCampaigns/{campaign_id}/sendNow");
         let mut url = self.client.base_url().join(path.trim_start_matches('/'))?;
         let mut req_builder = self.client.http().request(Method::POST, url);
@@ -127,7 +134,7 @@ impl SMSCampaignsApi {
     /// Send an SMS campaign's report
     pub async fn send_sms_report(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/smsCampaigns/{campaign_id}/sendReport");
@@ -141,7 +148,7 @@ impl SMSCampaignsApi {
     /// Send a test SMS campaign
     pub async fn send_test_sms(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &SendTestSmsRequest,
     ) -> Result<serde_json::Value> {
         let path = format!("/smsCampaigns/{campaign_id}/sendTest");
@@ -155,7 +162,7 @@ impl SMSCampaignsApi {
     /// Update a campaign's status
     pub async fn update_sms_campaign_status(
         &self,
-        campaign_id: i64,
+        campaign_id: CampaignId,
         body: &serde_json::Value,
     ) -> Result<serde_json::Value> {
         let path = format!("/smsCampaigns/{campaign_id}/status");
